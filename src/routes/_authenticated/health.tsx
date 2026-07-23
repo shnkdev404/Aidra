@@ -11,26 +11,25 @@ import {
   XAxis,
   YAxis,
 } from "recharts";
-import { Loader2 } from "lucide-react";
+import { Loader2, Activity, Plus, Sparkles, TrendingUp } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
-import { FadeIn } from "@/components/animated/FadeIn";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { addHealthRecord, listHealthRecords } from "@/lib/health.functions";
 
 export const Route = createFileRoute("/_authenticated/health")({
-  head: () => ({ meta: [{ title: "BMI — Aidra" }, { name: "robots", content: "noindex" }] }),
+  head: () => ({ meta: [{ title: "BMI & Vitals — Aidra Health" }, { name: "robots", content: "noindex" }] }),
   component: HealthPage,
 });
 
 function bmiCategory(bmi: number) {
-  if (bmi < 18.5) return { label: "Underweight", tone: "text-chart-3" };
-  if (bmi < 25) return { label: "Healthy range", tone: "text-primary" };
-  if (bmi < 30) return { label: "Overweight", tone: "text-gold" };
-  return { label: "Obese", tone: "text-destructive" };
+  if (bmi < 18.5) return { label: "Underweight", tone: "text-amber-400 bg-amber-400/10 border-amber-400/20" };
+  if (bmi < 25) return { label: "Healthy Range", tone: "text-[#1DB954] bg-[#1DB954]/10 border-[#1DB954]/20" };
+  if (bmi < 30) return { label: "Overweight", tone: "text-orange-400 bg-orange-400/10 border-orange-400/20" };
+  return { label: "Obese", tone: "text-red-400 bg-red-400/10 border-red-400/20" };
 }
 
 function HealthPage() {
@@ -52,9 +51,9 @@ function HealthPage() {
       queryClient.invalidateQueries({ queryKey: ["health-records"] });
       setWeight("");
       setNotes("");
-      toast.success("Logged");
+      toast.success("Vitals entry logged successfully");
     },
-    onError: (e) => toast.error(e instanceof Error ? e.message : "Failed to log"),
+    onError: (e) => toast.error(e instanceof Error ? e.message : "Failed to log entry"),
   });
 
   function handleSubmit(e: FormEvent) {
@@ -62,7 +61,7 @@ function HealthPage() {
     const h = Number(height);
     const w = Number(weight);
     if (!Number.isFinite(h) || !Number.isFinite(w)) {
-      toast.error("Enter valid numbers");
+      toast.error("Please enter valid height and weight numbers");
       return;
     }
     add.mutate({ height_cm: h, weight_kg: w, notes: notes.trim() || undefined });
@@ -79,149 +78,188 @@ function HealthPage() {
 
   return (
     <AppShell>
-      <div className="mx-auto max-w-5xl px-6 py-10 md:py-14">
-        <FadeIn>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Health record</div>
-          <h1 className="serif mt-3 text-5xl">BMI, over time.</h1>
-          <p className="mt-3 max-w-lg text-muted-foreground">
-            Height and weight only. Aidra takes care of the math.
+      <div className="space-y-6 pb-12">
+        {/* Hero Banner Header */}
+        <div className="rounded-2xl bg-gradient-to-r from-[#3b82f6]/20 via-[#181818] to-[#121212] p-8 border border-[#282828]">
+          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#3b82f6]">
+            <Activity className="h-4 w-4" /> Vitals Monitor
+          </div>
+          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+            BMI & Health Trends
+          </h1>
+          <p className="mt-2 text-sm text-[#b3b3b3]">
+            Track your physical body metrics over time with glowing analytics.
           </p>
-        </FadeIn>
+        </div>
 
-        <div className="mt-10 grid gap-6 md:grid-cols-[1.4fr_1fr]">
-          <FadeIn delay={0.05}>
-            <div className="rounded-2xl border border-border/60 bg-card p-6 md:p-8">
-              <div className="flex items-end justify-between">
-                <div>
-                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Latest</div>
-                  <div className="serif mt-2 text-6xl leading-none">{latest ? latest.bmi.toFixed(1) : "—"}</div>
-                  {cat && <div className={`mt-2 text-sm ${cat.tone}`}>{cat.label}</div>}
+        {/* Main Grid: Chart & Form */}
+        <div className="grid gap-6 md:grid-cols-[1.4fr_1fr]">
+          {/* Chart Container */}
+          <div className="rounded-2xl bg-[#181818] p-6 md:p-8 border border-[#282828]">
+            <div className="flex items-end justify-between border-b border-[#282828] pb-6">
+              <div>
+                <div className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7]">Latest BMI</div>
+                <div className="mt-2 text-5xl font-extrabold text-white tracking-tight">
+                  {latest ? latest.bmi.toFixed(1) : "—"}
                 </div>
-                <div className="text-right text-xs text-muted-foreground">
-                  {records.data?.length ?? 0} entries
-                </div>
+                {cat && (
+                  <span className={`mt-3 inline-block rounded-full border px-3 py-1 text-xs font-bold ${cat.tone}`}>
+                    {cat.label}
+                  </span>
+                )}
               </div>
 
-              <div className="mt-6 h-56">
-                {chartData.length > 1 ? (
-                  <ResponsiveContainer width="100%" height="100%">
-                    <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
-                      <defs>
-                        <linearGradient id="bmiFill" x1="0" y1="0" x2="0" y2="1">
-                          <stop offset="0%" stopColor="oklch(0.55 0.10 145)" stopOpacity={0.45} />
-                          <stop offset="100%" stopColor="oklch(0.55 0.10 145)" stopOpacity={0.02} />
-                        </linearGradient>
-                      </defs>
-                      <CartesianGrid stroke="oklch(0.20 0.02 40 / 0.06)" vertical={false} />
-                      <XAxis dataKey="date" stroke="oklch(0.45 0.02 60)" fontSize={11} tickLine={false} axisLine={false} />
-                      <YAxis stroke="oklch(0.45 0.02 60)" fontSize={11} tickLine={false} axisLine={false} domain={["dataMin - 1", "dataMax + 1"]} />
-                      <Tooltip
-                        contentStyle={{
-                          background: "oklch(0.98 0.008 85)",
-                          border: "1px solid oklch(0.86 0.02 80)",
-                          borderRadius: 8,
-                          fontSize: 12,
-                        }}
-                      />
-                      <Area
-                        type="monotone"
-                        dataKey="bmi"
-                        stroke="oklch(0.38 0.07 148)"
-                        strokeWidth={2}
-                        fill="url(#bmiFill)"
-                      />
-                    </AreaChart>
-                  </ResponsiveContainer>
-                ) : (
-                  <div className="flex h-full items-center justify-center text-sm text-muted-foreground">
-                    Add two entries to see your trend.
+              <div className="text-right">
+                <div className="flex items-center gap-1.5 text-xs font-bold text-[#1DB954]">
+                  <TrendingUp className="h-4 w-4" /> {records.data?.length ?? 0} Logged Entries
+                </div>
+                {latest && (
+                  <div className="mt-1 text-xs text-[#a7a7a7]">
+                    {latest.height_cm}cm / {latest.weight_kg}kg
                   </div>
                 )}
               </div>
             </div>
-          </FadeIn>
 
-          <FadeIn delay={0.1}>
-            <form
-              onSubmit={handleSubmit}
-              className="rounded-2xl border border-border/60 bg-card p-6 md:p-8"
-            >
-              <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">New entry</div>
-              <h2 className="serif mt-2 text-2xl">Log where you are today.</h2>
-
-              <div className="mt-6 space-y-4">
-                <div className="grid grid-cols-2 gap-3">
-                  <div className="space-y-1.5">
-                    <Label htmlFor="height">Height (cm)</Label>
-                    <Input
-                      id="height"
-                      type="number"
-                      inputMode="decimal"
-                      step="0.1"
-                      min="50"
-                      max="272"
-                      value={height}
-                      onChange={(e) => setHeight(e.target.value)}
-                      required
+            {/* Rechart View */}
+            <div className="mt-6 h-64">
+              {chartData.length > 1 ? (
+                <ResponsiveContainer width="100%" height="100%">
+                  <AreaChart data={chartData} margin={{ top: 10, right: 10, left: -20, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="emeraldGreenGlow" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="0%" stopColor="#1DB954" stopOpacity={0.5} />
+                        <stop offset="100%" stopColor="#1DB954" stopOpacity={0.0} />
+                      </linearGradient>
+                    </defs>
+                    <CartesianGrid stroke="rgba(255, 255, 255, 0.05)" vertical={false} />
+                    <XAxis dataKey="date" stroke="#a7a7a7" fontSize={11} tickLine={false} axisLine={false} />
+                    <YAxis stroke="#a7a7a7" fontSize={11} tickLine={false} axisLine={false} domain={["dataMin - 1", "dataMax + 1"]} />
+                    <Tooltip
+                      contentStyle={{
+                        background: "#282828",
+                        border: "1px solid rgba(255,255,255,0.1)",
+                        borderRadius: 12,
+                        color: "#ffffff",
+                        fontSize: 12,
+                        fontWeight: "bold",
+                      }}
                     />
-                  </div>
-                  <div className="space-y-1.5">
-                    <Label htmlFor="weight">Weight (kg)</Label>
-                    <Input
-                      id="weight"
-                      type="number"
-                      inputMode="decimal"
-                      step="0.1"
-                      min="20"
-                      max="500"
-                      value={weight}
-                      onChange={(e) => setWeight(e.target.value)}
-                      required
+                    <Area
+                      type="monotone"
+                      dataKey="bmi"
+                      stroke="#1DB954"
+                      strokeWidth={3}
+                      fill="url(#emeraldGreenGlow)"
                     />
-                  </div>
-                </div>
-                <div className="space-y-1.5">
-                  <Label htmlFor="notes">Notes (optional)</Label>
-                  <Input
-                    id="notes"
-                    value={notes}
-                    onChange={(e) => setNotes(e.target.value)}
-                    maxLength={500}
-                    placeholder="After lunch, before workout…"
-                  />
-                </div>
-
-                <Button type="submit" className="w-full" disabled={add.isPending}>
-                  {add.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save entry"}
-                </Button>
-              </div>
-            </form>
-          </FadeIn>
-        </div>
-
-        <FadeIn delay={0.15}>
-          <div className="mt-8 rounded-xl border border-border/60 bg-card p-6">
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">History</div>
-            <div className="mt-4 divide-y divide-border/60">
-              {(records.data ?? []).slice().reverse().slice(0, 8).map((r) => (
-                <div key={r.id} className="flex items-center justify-between py-3 text-sm">
-                  <div className="text-muted-foreground">
-                    {new Date(r.recorded_at).toLocaleString()}
-                  </div>
-                  <div className="flex items-center gap-6">
-                    <span className="text-muted-foreground">{r.height_cm}cm · {r.weight_kg}kg</span>
-                    <span className="serif text-lg">{Number(r.bmi).toFixed(1)}</span>
-                  </div>
-                </div>
-              ))}
-              {records.data && records.data.length === 0 && (
-                <div className="py-6 text-center text-sm text-muted-foreground">
-                  No entries yet. Add your first one on the right.
+                  </AreaChart>
+                </ResponsiveContainer>
+              ) : (
+                <div className="flex h-full flex-col items-center justify-center text-center text-sm text-[#a7a7a7]">
+                  <Sparkles className="mb-2 h-8 w-8 text-[#1DB954]" />
+                  Log at least two entries to render your glowing metric chart.
                 </div>
               )}
             </div>
           </div>
-        </FadeIn>
+
+          {/* Form Container */}
+          <form onSubmit={handleSubmit} className="rounded-2xl bg-[#181818] p-6 md:p-8 border border-[#282828]">
+            <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1DB954]">
+              <Plus className="h-4 w-4" /> New Vitals Log
+            </div>
+            <h2 className="mt-2 text-2xl font-bold text-white">Record Vitals</h2>
+
+            <div className="mt-6 space-y-4">
+              <div className="grid grid-cols-2 gap-3">
+                <div className="space-y-1.5">
+                  <Label htmlFor="height" className="text-xs font-bold text-[#b3b3b3]">
+                    Height (cm)
+                  </Label>
+                  <Input
+                    id="height"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.1"
+                    min="50"
+                    max="272"
+                    value={height}
+                    onChange={(e) => setHeight(e.target.value)}
+                    required
+                    className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                    placeholder="175"
+                  />
+                </div>
+                <div className="space-y-1.5">
+                  <Label htmlFor="weight" className="text-xs font-bold text-[#b3b3b3]">
+                    Weight (kg)
+                  </Label>
+                  <Input
+                    id="weight"
+                    type="number"
+                    inputMode="decimal"
+                    step="0.1"
+                    min="20"
+                    max="500"
+                    value={weight}
+                    onChange={(e) => setWeight(e.target.value)}
+                    required
+                    className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                    placeholder="70"
+                  />
+                </div>
+              </div>
+
+              <div className="space-y-1.5">
+                <Label htmlFor="notes" className="text-xs font-bold text-[#b3b3b3]">
+                  Notes (optional)
+                </Label>
+                <Input
+                  id="notes"
+                  value={notes}
+                  onChange={(e) => setNotes(e.target.value)}
+                  maxLength={500}
+                  placeholder="Morning weight, post-workout..."
+                  className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                />
+              </div>
+
+              <button
+                type="submit"
+                className="w-full rounded-full bg-[#1DB954] py-3 text-sm font-extrabold text-black shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50"
+                disabled={add.isPending}
+              >
+                {add.isPending ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : "Save Entry"}
+              </button>
+            </div>
+          </form>
+        </div>
+
+        {/* History Table Container */}
+        <div className="rounded-2xl bg-[#181818] p-6 border border-[#282828]">
+          <h3 className="text-lg font-bold text-white mb-4">Vitals History Log</h3>
+          <div className="divide-y divide-[#282828]">
+            {(records.data ?? []).slice().reverse().slice(0, 8).map((r) => (
+              <div key={r.id} className="flex items-center justify-between py-3.5 text-sm">
+                <div className="text-xs text-[#a7a7a7]">
+                  {new Date(r.recorded_at).toLocaleString()}
+                </div>
+                <div className="flex items-center gap-6">
+                  <span className="text-xs text-[#b3b3b3]">{r.height_cm} cm · {r.weight_kg} kg</span>
+                  <span className="font-extrabold text-white text-base bg-[#242424] px-3 py-1 rounded-full">
+                    BMI {Number(r.bmi).toFixed(1)}
+                  </span>
+                </div>
+              </div>
+            ))}
+
+            {records.data && records.data.length === 0 && (
+              <div className="py-8 text-center text-sm text-[#a7a7a7]">
+                No historical records found. Log your first weight entry above.
+              </div>
+            )}
+          </div>
+        </div>
       </div>
     </AppShell>
   );

@@ -1,24 +1,15 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { BadgeCheck, FileCheck2, Stethoscope, ArrowRight } from "lucide-react";
+import { BadgeCheck, FileCheck2, Stethoscope, ArrowRight, ShieldCheck, Sparkles } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animated/FadeIn";
-import { Button } from "@/components/ui/button";
-import { Magnetic } from "@/components/animated/Magnetic";
 
 export const Route = createFileRoute("/for-doctors")({
   head: () => ({
     meta: [
-      { title: "For doctors — Aidra" },
+      { title: "Doctor Portal & License Verification — Aidra" },
       {
         name: "description",
-        content:
-          "Join Aidra as a verified clinician. Real license review, calm space, patient-first tools.",
-      },
-      { property: "og:title", content: "For doctors — Aidra" },
-      {
-        property: "og:description",
-        content: "A verified space that respects your license and your time.",
+        content: "Join Aidra as a verified clinician. Manual medical license review and authentic doctor badges.",
       },
     ],
   }),
@@ -27,171 +18,114 @@ export const Route = createFileRoute("/for-doctors")({
 
 function DoctorLanding() {
   return (
-    <div className="bg-ink text-paper">
-      <div className="bg-ink text-paper [--background:oklch(0.18_0.02_40)] [--foreground:oklch(0.97_0.018_85)]">
-        <SiteHeaderDark />
+    <div className="bg-black text-white selection:bg-[#1DB954] selection:text-black">
+      <SiteHeader variant="doctor" />
 
-        <section className="relative overflow-hidden">
-          <div
-            className="pointer-events-none absolute inset-0 opacity-20"
-            style={{
-              backgroundImage: "radial-gradient(oklch(0.75 0.13 82) 1px, transparent 1px)",
-              backgroundSize: "28px 28px",
-            }}
-          />
-          <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-24">
-            <FadeIn>
-              <div className="inline-flex items-center gap-2 rounded-full border border-paper/15 bg-paper/5 px-3 py-1 text-xs uppercase tracking-[0.2em] text-paper/70">
-                For verified clinicians
-              </div>
-            </FadeIn>
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden pt-16 pb-24 border-b border-[#282828]">
+        <div className="absolute top-0 right-1/3 h-96 w-96 rounded-full bg-[#8b5cf6]/20 blur-3xl" />
 
-            <FadeIn delay={0.08}>
-              <h1 className="serif mt-6 max-w-4xl text-balance text-5xl leading-[1.05] md:text-7xl">
-                Practice with the <em className="italic text-gold">signal-to-noise</em> you actually want.
-              </h1>
-            </FadeIn>
-
-            <FadeIn delay={0.2}>
-              <p className="mt-6 max-w-2xl text-lg text-paper/70">
-                Aidra is where patients arrive already informed — and where clinicians arrive
-                already verified. One paid license review, a quiet workspace, and no
-                pretend-doctors on the platform.
-              </p>
-            </FadeIn>
-
-            <FadeIn delay={0.3}>
-              <div className="mt-10 flex flex-wrap gap-3">
-                <Magnetic>
-                  <Button asChild size="lg" className="h-12 gap-2 bg-gold text-ink hover:bg-gold/90">
-                    <Link to="/doctor-auth" search={{ mode: "signup" }}>
-                      Apply for verification <ArrowRight className="h-4 w-4" />
-                    </Link>
-                  </Button>
-                </Magnetic>
-                <Button
-                  asChild
-                  size="lg"
-                  variant="ghost"
-                  className="h-12 text-paper hover:bg-paper/10"
-                >
-                  <Link to="/doctor-auth">I already have an account</Link>
-                </Button>
-              </div>
-            </FadeIn>
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#8b5cf6]/30 bg-[#8b5cf6]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#8b5cf6]">
+            <BadgeCheck className="h-4 w-4" /> Verified Physician Network
           </div>
-        </section>
 
-        <section id="verification" className="mx-auto max-w-6xl px-6 py-24">
-          <FadeIn>
-            <div className="max-w-2xl">
-              <div className="text-xs uppercase tracking-[0.2em] text-paper/50">Verification</div>
-              <h2 className="serif mt-3 text-4xl md:text-5xl">
-                Three checks. One fixed fee. Trust that shows up on every profile.
-              </h2>
-            </div>
-          </FadeIn>
+          <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-tight text-white sm:text-7xl leading-[1.08]">
+            Practice with the <span className="text-[#1DB954]">clinical signal</span> you deserve.
+          </h1>
 
-          <StaggerChildren className="mt-14 grid gap-6 md:grid-cols-3">
-            {STEPS.map((s) => (
-              <StaggerItem key={s.title}>
-                <div className="h-full rounded-xl border border-paper/10 bg-paper/[0.04] p-7">
-                  <s.icon className="h-6 w-6 text-gold" />
-                  <div className="serif mt-5 text-2xl">{s.title}</div>
-                  <p className="mt-2 text-sm text-paper/70">{s.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
-        </section>
+          <p className="mt-6 max-w-2xl text-lg text-[#b3b3b3]">
+            Aidra connects verified clinicians with informed patients. One license review, zero credential noise, and authentic medical badges.
+          </p>
 
-        <section id="benefits" className="border-t border-paper/10 bg-paper/[0.03]">
-          <div className="mx-auto grid max-w-6xl gap-14 px-6 py-24 md:grid-cols-2">
-            <FadeIn>
-              <h2 className="serif text-4xl leading-tight md:text-5xl">
-                Everything you'd want from a modern practice — nothing you didn't ask for.
-              </h2>
-            </FadeIn>
-            <div className="space-y-6">
-              {BENEFITS.map((b, i) => (
-                <FadeIn key={b} delay={i * 0.06}>
-                  <div className="flex gap-4 border-b border-paper/10 pb-6">
-                    <div className="mt-1 h-2 w-2 flex-none rounded-full bg-gold" />
-                    <p className="text-lg text-paper/85">{b}</p>
-                  </div>
-                </FadeIn>
-              ))}
-            </div>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              to="/doctor-auth"
+              search={{ mode: "signup" }}
+              className="flex items-center gap-2 rounded-full bg-[#1DB954] px-8 py-4 text-base font-extrabold text-black shadow-xl hover:scale-105 transition-all"
+            >
+              Apply for Doctor Verification <ArrowRight className="h-5 w-5 stroke-[3]" />
+            </Link>
+
+            <Link
+              to="/doctor-auth"
+              className="rounded-full bg-[#242424] border border-[#282828] px-8 py-4 text-base font-bold text-white hover:bg-[#2a2a2a] transition-all"
+            >
+              Doctor Sign In
+            </Link>
           </div>
-        </section>
-
-        <SiteFooterDark />
-      </div>
-    </div>
-  );
-}
-
-// A dark-variant header for this route only (keeps SiteHeader semantics unchanged elsewhere).
-function SiteHeaderDark() {
-  return (
-    <header className="relative z-20 border-b border-paper/10">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gold text-ink">
-            <span className="serif text-lg leading-none">a</span>
-          </div>
-          <span className="serif text-xl">Aidra</span>
-          <span className="ml-1 hidden text-xs uppercase tracking-[0.18em] text-paper/50 sm:inline">
-            for doctors
-          </span>
-        </Link>
-        <nav className="hidden items-center gap-8 text-sm text-paper/70 md:flex">
-          <Link to="/for-doctors" hash="verification" className="hover:text-paper">Verification</Link>
-          <Link to="/for-doctors" hash="benefits" className="hover:text-paper">Benefits</Link>
-          <Link to="/" className="hover:text-paper">For patients</Link>
-        </nav>
-        <div className="flex items-center gap-2">
-          <Button variant="ghost" asChild size="sm" className="text-paper hover:bg-paper/10">
-            <Link to="/doctor-auth">Doctor sign in</Link>
-          </Button>
-          <Button asChild size="sm" className="bg-gold text-ink hover:bg-gold/90">
-            <Link to="/doctor-auth" search={{ mode: "signup" }}>Apply</Link>
-          </Button>
         </div>
-      </div>
-    </header>
-  );
-}
+      </section>
 
-function SiteFooterDark() {
-  return (
-    <footer className="border-t border-paper/10 py-8 text-center text-xs text-paper/50">
-      © {new Date().getFullYear()} Aidra. For verified clinicians.
-    </footer>
+      {/* VERIFICATION STEPS */}
+      <section id="verification" className="mx-auto max-w-7xl px-6 py-24">
+        <div className="max-w-3xl">
+          <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">Verification Process</div>
+          <h2 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+            Three simple steps to clinician verification.
+          </h2>
+        </div>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
+          {STEPS.map((s) => (
+            <div key={s.title} className="rounded-2xl bg-[#181818] p-8 border border-[#282828]">
+              <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-[#8b5cf6]/20 text-[#8b5cf6] mb-6">
+                <s.icon className="h-6 w-6" />
+              </div>
+              <h3 className="text-xl font-bold text-white">{s.title}</h3>
+              <p className="mt-2 text-sm text-[#b3b3b3] leading-relaxed">{s.body}</p>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      {/* BENEFITS */}
+      <section id="benefits" className="border-t border-[#282828] bg-[#121212] py-24">
+        <div className="mx-auto grid max-w-7xl gap-12 px-6 md:grid-cols-2">
+          <div>
+            <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">Benefits</div>
+            <h2 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+              Why physicians join Aidra.
+            </h2>
+          </div>
+
+          <div className="space-y-4">
+            {BENEFITS.map((b) => (
+              <div key={b} className="flex items-center gap-4 rounded-xl bg-[#181818] p-5 border border-[#282828]">
+                <ShieldCheck className="h-6 w-6 flex-none text-[#1DB954]" />
+                <span className="text-base font-semibold text-white">{b}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <SiteFooter />
+    </div>
   );
 }
 
 const STEPS = [
   {
     icon: FileCheck2,
-    title: "Submit your credentials",
-    body: "Full name, license number, specialty, and country. Upload your license document.",
+    title: "Submit License Details",
+    body: "Provide your full name, medical license number, specialty, and state/country of practice.",
   },
   {
     icon: BadgeCheck,
-    title: "Pay a one-time review fee",
-    body: "Handled securely. Refunded if we can't complete your verification for any reason.",
+    title: "Board Review",
+    body: "Our team verifies your credentials directly with state and national medical licensing boards.",
   },
   {
     icon: Stethoscope,
-    title: "Get your verified badge",
-    body: "Our team manually reviews and approves. You get a badge patients can trust.",
+    title: "Verified Physician Badge",
+    body: "Receive your verified clinician status on Aidra with patient consultation privileges.",
   },
 ];
 
 const BENEFITS = [
-  "Patients arrive already informed by an AI companion that never oversteps.",
-  "A workspace tuned for reading and thinking, not for capturing your attention.",
-  "Full control over what you share, and how. No shadow marketing.",
-  "Verified badge on every profile — because trust should be visible.",
+  "Patients arrive informed with pre-organized AI symptom notes.",
+  "Distraction-free dark mode workspace optimized for clinical focus.",
+  "Verified physician badge displayed across your Aidra profile.",
+  "Complete privacy control over patient interactions.",
 ];

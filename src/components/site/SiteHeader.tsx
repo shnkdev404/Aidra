@@ -1,7 +1,7 @@
 import { Link, useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
+import { HeartPulse } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
 import type { User } from "@supabase/supabase-js";
 
 export function SiteHeader({ variant = "patient" }: { variant?: "patient" | "doctor" }) {
@@ -17,57 +17,73 @@ export function SiteHeader({ variant = "patient" }: { variant?: "patient" | "doc
   }, []);
 
   return (
-    <header className="relative z-20 border-b border-border/60 bg-paper/70 backdrop-blur">
-      <div className="mx-auto flex max-w-6xl items-center justify-between px-6 py-5">
-        <Link to="/" className="flex items-center gap-2.5">
-          <div className="relative flex h-8 w-8 items-center justify-center rounded-full bg-primary text-primary-foreground">
-            <span className="serif text-lg leading-none">a</span>
-            <span className="absolute inset-0 rounded-full animate-pulse-ring" />
+    <header className="sticky top-0 z-30 border-b border-[#282828] bg-black/90 backdrop-blur-md">
+      <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-4">
+        <Link to="/" className="flex items-center gap-3">
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1DB954] text-black shadow-lg">
+            <HeartPulse className="h-5 w-5 fill-black" />
           </div>
-          <span className="serif text-xl tracking-tight">Aidra</span>
-          <span className="ml-1 hidden text-xs uppercase tracking-[0.18em] text-muted-foreground sm:inline">
-            Health, in prose.
+          <span className="text-xl font-bold tracking-tight text-white">Aidra</span>
+          <span className="ml-1 hidden text-xs font-semibold text-[#1DB954] uppercase tracking-wider sm:inline bg-[#1DB954]/10 px-2.5 py-0.5 rounded-full border border-[#1DB954]/20">
+            AI Health
           </span>
         </Link>
 
-        <nav className="hidden items-center gap-8 text-sm text-ink-muted md:flex">
+        <nav className="hidden items-center gap-8 text-xs font-bold text-[#b3b3b3] md:flex">
           {variant === "patient" ? (
             <>
-              <Link to="/" hash="features" className="hover:text-foreground">Features</Link>
-              <Link to="/" hash="how" className="hover:text-foreground">How it works</Link>
-              <Link to="/for-doctors" className="hover:text-foreground">For doctors</Link>
+              <Link to="/" hash="features" className="hover:text-white transition-colors">Features</Link>
+              <Link to="/" hash="how" className="hover:text-white transition-colors">How it works</Link>
+              <Link to="/for-doctors" className="hover:text-white transition-colors">For doctors</Link>
             </>
           ) : (
             <>
-              <Link to="/for-doctors" hash="verification" className="hover:text-foreground">Verification</Link>
-              <Link to="/for-doctors" hash="benefits" className="hover:text-foreground">Benefits</Link>
-              <Link to="/" className="hover:text-foreground">For patients</Link>
+              <Link to="/for-doctors" hash="verification" className="hover:text-white transition-colors">Verification</Link>
+              <Link to="/for-doctors" hash="benefits" className="hover:text-white transition-colors">Benefits</Link>
+              <Link to="/" className="hover:text-white transition-colors">For patients</Link>
             </>
           )}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-3">
           {user ? (
-            <Button variant="default" size="sm" onClick={() => navigate({ to: "/dashboard" })}>
-              Open app
-            </Button>
+            <button
+              onClick={() => navigate({ to: "/dashboard" })}
+              className="rounded-full bg-[#1DB954] px-5 py-2 text-xs font-extrabold text-black hover:scale-105 transition-all shadow-md"
+            >
+              Open Dashboard
+            </button>
           ) : variant === "patient" ? (
             <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/auth">Sign in</Link>
-              </Button>
-              <Button variant="default" size="sm" asChild>
-                <Link to="/auth" search={{ mode: "signup" }}>Get started</Link>
-              </Button>
+              <Link
+                to="/auth"
+                className="text-xs font-bold text-[#b3b3b3] hover:text-white px-3 py-2 transition-colors"
+              >
+                Sign in
+              </Link>
+              <Link
+                to="/auth"
+                search={{ mode: "signup" }}
+                className="rounded-full bg-[#1DB954] px-5 py-2 text-xs font-extrabold text-black hover:scale-105 transition-all shadow-md"
+              >
+                Get Started Free
+              </Link>
             </>
           ) : (
             <>
-              <Button variant="ghost" size="sm" asChild>
-                <Link to="/doctor-auth">Doctor sign in</Link>
-              </Button>
-              <Button variant="default" size="sm" asChild>
-                <Link to="/doctor-auth" search={{ mode: "signup" }}>Apply as doctor</Link>
-              </Button>
+              <Link
+                to="/doctor-auth"
+                className="text-xs font-bold text-[#b3b3b3] hover:text-white px-3 py-2 transition-colors"
+              >
+                Doctor Login
+              </Link>
+              <Link
+                to="/doctor-auth"
+                search={{ mode: "signup" }}
+                className="rounded-full bg-[#1DB954] px-5 py-2 text-xs font-extrabold text-black hover:scale-105 transition-all shadow-md"
+              >
+                Apply as Doctor
+              </Link>
             </>
           )}
         </div>

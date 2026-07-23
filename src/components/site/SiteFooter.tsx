@@ -1,41 +1,49 @@
 import { Link } from "@tanstack/react-router";
+import { HeartPulse } from "lucide-react";
 
 export function SiteFooter() {
   return (
-    <footer className="mt-24 border-t border-border/60">
-      <div className="mx-auto grid max-w-6xl gap-10 px-6 py-14 md:grid-cols-4">
+    <footer className="mt-24 border-t border-[#282828] bg-black text-[#b3b3b3]">
+      <div className="mx-auto grid max-w-7xl gap-10 px-6 py-14 md:grid-cols-4">
         <div>
-          <div className="serif text-2xl">Aidra</div>
-          <p className="mt-3 max-w-xs text-sm text-muted-foreground">
-            An unhurried health companion. AI guidance, verified doctors, and the quiet
-            tools you actually keep using.
+          <div className="flex items-center gap-2">
+            <div className="flex h-7 w-7 items-center justify-center rounded-full bg-[#1DB954] text-black">
+              <HeartPulse className="h-4 w-4 fill-black" />
+            </div>
+            <span className="text-xl font-bold text-white">Aidra</span>
+          </div>
+          <p className="mt-4 max-w-xs text-xs text-[#a7a7a7] leading-relaxed">
+            Your always-on AI health companion and verified physician workspace.
           </p>
         </div>
+
         <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Patients</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><Link to="/auth" className="hover:underline underline-offset-4">Sign in</Link></li>
-            <li><Link to="/" hash="features" className="hover:underline underline-offset-4">Features</Link></li>
-            <li><Link to="/" hash="how" className="hover:underline underline-offset-4">How it works</Link></li>
+          <div className="text-xs font-bold uppercase tracking-wider text-white">For Patients</div>
+          <ul className="mt-4 space-y-2 text-xs">
+            <li><Link to="/auth" className="hover:text-[#1DB954] transition-colors">Sign In / Sign Up</Link></li>
+            <li><Link to="/" hash="features" className="hover:text-[#1DB954] transition-colors">AI Symptoms Assistant</Link></li>
+            <li><Link to="/" hash="how" className="hover:text-[#1DB954] transition-colors">BMI & Health Tracking</Link></li>
           </ul>
         </div>
+
         <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Doctors</div>
-          <ul className="mt-4 space-y-2 text-sm">
-            <li><Link to="/for-doctors" className="hover:underline underline-offset-4">Overview</Link></li>
-            <li><Link to="/doctor-auth" className="hover:underline underline-offset-4">Verify credentials</Link></li>
+          <div className="text-xs font-bold uppercase tracking-wider text-white">For Physicians</div>
+          <ul className="mt-4 space-y-2 text-xs">
+            <li><Link to="/for-doctors" className="hover:text-[#1DB954] transition-colors">Doctor Verification Overview</Link></li>
+            <li><Link to="/doctor-auth" className="hover:text-[#1DB954] transition-colors">Submit Credentials</Link></li>
           </ul>
         </div>
+
         <div>
-          <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Practice</div>
-          <p className="mt-4 text-sm text-muted-foreground">
-            Aidra is not a substitute for professional medical care. In an emergency,
-            call your local emergency line.
+          <div className="text-xs font-bold uppercase tracking-wider text-white">Medical Notice</div>
+          <p className="mt-4 text-xs text-[#a7a7a7] leading-relaxed">
+            Aidra AI provides health information for educational guidance and does not replace emergency medical care.
           </p>
         </div>
       </div>
-      <div className="border-t border-border/60 py-6 text-center text-xs text-muted-foreground">
-        © {new Date().getFullYear()} Aidra. Made with care.
+
+      <div className="border-t border-[#282828] py-6 text-center text-xs text-[#a7a7a7]">
+        © {new Date().getFullYear()} Aidra Health. All rights reserved.
       </div>
     </footer>
   );

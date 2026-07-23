@@ -1,26 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, HeartPulse, MessageSquareText, LineChart, ShieldCheck } from "lucide-react";
+import { ArrowRight, HeartPulse, MessageSquareText, LineChart, ShieldCheck, Play, Sparkles, Activity } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
-import { FadeIn, StaggerChildren, StaggerItem } from "@/components/animated/FadeIn";
-import { AuroraBackdrop } from "@/components/animated/AuroraBackdrop";
-import { ShinyText } from "@/components/animated/ShinyText";
-import { Magnetic } from "@/components/animated/Magnetic";
-import { Button } from "@/components/ui/button";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aidra — Your calm, always-on health companion" },
+      { title: "Aidra — Always-On AI Health & Verified Doctors" },
       {
         name: "description",
         content:
-          "AI health guidance, BMI tracking, and verified doctors — in one unhurried place. Free to start.",
-      },
-      { property: "og:title", content: "Aidra — Your calm, always-on health companion" },
-      {
-        property: "og:description",
-        content: "AI health guidance, BMI tracking, and verified doctors, in one place.",
+          "AI health guidance, BMI tracking, and verified doctors in one sleek dark workspace. Free to start.",
       },
     ],
   }),
@@ -29,175 +19,162 @@ export const Route = createFileRoute("/")({
 
 function PatientLanding() {
   return (
-    <div className="bg-paper text-ink">
+    <div className="bg-black text-white selection:bg-[#1DB954] selection:text-black">
       <SiteHeader variant="patient" />
 
-      {/* HERO */}
-      <section className="relative overflow-hidden">
-        <AuroraBackdrop />
-        <div className="relative mx-auto max-w-6xl px-6 pb-24 pt-20 md:pt-28">
-          <FadeIn>
-            <div className="inline-flex items-center gap-2 rounded-full border border-border/70 bg-paper-soft/60 px-3 py-1 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              <span className="h-1.5 w-1.5 rounded-full bg-primary" />
-              Now in early access
-            </div>
-          </FadeIn>
+      {/* HERO SECTION */}
+      <section className="relative overflow-hidden pt-16 pb-24 border-b border-[#282828]">
+        <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-[#1DB954]/15 blur-3xl" />
+        <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
 
-          <FadeIn delay={0.05}>
-            <h1 className="serif mt-6 max-w-3xl text-balance text-5xl leading-[1.05] md:text-7xl">
-              A quieter way to <em className="italic">tend</em> to your{" "}
-              <ShinyText>health.</ShinyText>
-            </h1>
-          </FadeIn>
+        <div className="relative mx-auto max-w-7xl px-6">
+          <div className="inline-flex items-center gap-2 rounded-full border border-[#1DB954]/30 bg-[#1DB954]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#1DB954]">
+            <Sparkles className="h-4 w-4" /> Next-Gen Medical AI
+          </div>
 
-          <FadeIn delay={0.15}>
-            <p className="mt-6 max-w-xl text-lg text-ink-muted">
-              Aidra is an AI health companion that listens carefully, explains gently, and keeps
-              your BMI and health story in one calm, private place — with real, verified doctors
-              a step away.
-            </p>
-          </FadeIn>
+          <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-tight text-white sm:text-7xl leading-[1.08]">
+            Your health story, powered by <span className="text-[#1DB954]">Medical AI.</span>
+          </h1>
 
-          <FadeIn delay={0.25}>
-            <div className="mt-10 flex flex-wrap gap-3">
-              <Magnetic>
-                <Button size="lg" asChild className="group h-12 gap-2 px-6">
-                  <Link to="/auth" search={{ mode: "signup" }}>
-                    Start free
-                    <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" />
-                  </Link>
-                </Button>
-              </Magnetic>
-              <Button size="lg" variant="ghost" asChild className="h-12 px-4">
-                <Link to="/for-doctors">I'm a doctor →</Link>
-              </Button>
-            </div>
-          </FadeIn>
+          <p className="mt-6 max-w-2xl text-lg text-[#b3b3b3]">
+            Instant 24/7 symptom analysis, glowing BMI trends, and verified clinician access — built inside a sleek, distraction-free environment.
+          </p>
 
-          <FadeIn delay={0.35}>
-            <p className="mt-8 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              Bank-grade privacy · Not medical advice · You always own your data
-            </p>
-          </FadeIn>
+          <div className="mt-10 flex flex-wrap items-center gap-4">
+            <Link
+              to="/auth"
+              search={{ mode: "signup" }}
+              className="flex items-center gap-2 rounded-full bg-[#1DB954] px-8 py-4 text-base font-extrabold text-black shadow-xl hover:scale-105 transition-all"
+            >
+              Get Started Free <ArrowRight className="h-5 w-5 stroke-[3]" />
+            </Link>
 
-          {/* Editorial preview card */}
-          <FadeIn delay={0.45}>
-            <div className="relative mt-16 overflow-hidden rounded-2xl border border-border/70 bg-card shadow-editorial">
-              <div className="grid gap-0 md:grid-cols-[1.2fr_1fr]">
-                <div className="border-b border-border/60 p-8 md:border-b-0 md:border-r">
-                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    A conversation
-                  </div>
-                  <div className="mt-4 space-y-4">
-                    <div className="max-w-[85%] rounded-2xl rounded-tl-sm bg-secondary p-4 text-sm">
-                      I've had a dull headache for two days and I'm feeling foggy. Not sleeping well.
-                    </div>
-                    <div className="max-w-[90%] rounded-2xl rounded-tr-sm bg-primary/8 border border-primary/15 p-4 text-sm">
-                      That sounds tiring. A few things can cause this together — dehydration,
-                      screen strain, or unsettled sleep. Before anything else, how much water
-                      did you have yesterday, and did you nap in the afternoon?
-                    </div>
-                  </div>
+            <Link
+              to="/for-doctors"
+              className="rounded-full bg-[#242424] border border-[#282828] px-8 py-4 text-base font-bold text-white hover:bg-[#2a2a2a] transition-all"
+            >
+              For Physicians & Doctors
+            </Link>
+          </div>
+
+          <div className="mt-8 text-xs font-bold uppercase tracking-wider text-[#a7a7a7]">
+            🔒 HIPAA-Compliant Architecture · Verified Doctors · Private & Secure
+          </div>
+
+          {/* Interactive Preview Card */}
+          <div className="relative mt-16 overflow-hidden rounded-2xl border border-[#282828] bg-[#181818] shadow-2xl">
+            <div className="grid md:grid-cols-2">
+              <div className="border-b border-[#282828] p-8 md:border-b-0 md:border-r">
+                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#1DB954]">
+                  <span>AI Consultation Stream</span>
+                  <span className="flex h-2 w-2 rounded-full bg-[#1DB954] animate-pulse" />
                 </div>
-                <div className="p-8">
-                  <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-                    Your BMI, tracked
+                <div className="mt-6 space-y-4">
+                  <div className="rounded-xl bg-[#282828] p-4 text-sm text-white">
+                    "I've been having mild tightness in my chest after running, along with shortness of breath."
                   </div>
-                  <div className="mt-4">
-                    <div className="serif text-5xl">22.4</div>
-                    <div className="mt-1 text-sm text-muted-foreground">Healthy range</div>
+                  <div className="rounded-xl bg-[#1DB954]/10 border border-[#1DB954]/30 p-4 text-sm text-white">
+                    <div className="mb-2 flex items-center gap-2 text-xs font-bold text-[#1DB954]">
+                      <Sparkles className="h-4 w-4" /> Aidra Medical Response
+                    </div>
+                    Exercise-induced chest tightness can range from simple bronchial asthma to cardiovascular exertion. Tell me more about your resting heart rate and hydration today.
                   </div>
-                  <div className="mt-6 flex h-24 items-end gap-1.5">
-                    {[40, 55, 48, 62, 58, 68, 72, 65, 74, 70, 78, 82].map((h, i) => (
-                      <div
-                        key={i}
-                        className="flex-1 rounded-t bg-gradient-to-t from-primary/40 to-primary/80"
-                        style={{ height: `${h}%` }}
-                      />
-                    ))}
-                  </div>
-                  <div className="mt-2 text-xs text-muted-foreground">Last 12 entries</div>
                 </div>
               </div>
+
+              <div className="p-8 bg-gradient-to-b from-[#181818] to-[#121212]">
+                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#3b82f6]">
+                  <span>Live Vitals Monitor</span>
+                  <Activity className="h-4 w-4" />
+                </div>
+                <div className="mt-6">
+                  <div className="text-5xl font-extrabold text-white">22.4</div>
+                  <div className="mt-1 text-xs font-bold text-[#1DB954]">Healthy Range BMI</div>
+                </div>
+                <div className="mt-8 flex h-28 items-end gap-2">
+                  {[35, 45, 52, 60, 55, 68, 75, 70, 82, 78, 88, 95].map((h, i) => (
+                    <div
+                      key={i}
+                      className="flex-1 rounded-t bg-[#1DB954] transition-all hover:bg-[#1ed760]"
+                      style={{ height: `${h}%` }}
+                    />
+                  ))}
+                </div>
+                <div className="mt-3 text-xs text-[#a7a7a7]">Glowing trend log (Last 12 checks)</div>
+              </div>
             </div>
-          </FadeIn>
+          </div>
         </div>
       </section>
 
-      {/* FEATURES */}
-      <section id="features" className="mx-auto max-w-6xl px-6 py-24">
-        <FadeIn>
-          <div className="max-w-2xl">
-            <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-              What's inside
-            </div>
-            <h2 className="serif mt-3 text-4xl md:text-5xl">
-              Everything you'd ask a very patient friend who happens to have read the whole library.
-            </h2>
-          </div>
-        </FadeIn>
+      {/* FEATURES SECTION */}
+      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
+        <div className="max-w-3xl">
+          <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">Capabilities</div>
+          <h2 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
+            Built like your favorite music player, but for your health.
+          </h2>
+        </div>
 
-        <StaggerChildren className="mt-14 grid gap-6 md:grid-cols-2">
+        <div className="mt-12 grid gap-6 md:grid-cols-2">
           {FEATURES.map((f) => (
-            <StaggerItem key={f.title}>
-              <FeatureCard {...f} />
-            </StaggerItem>
+            <div
+              key={f.title}
+              className="group flex gap-5 rounded-2xl bg-[#181818] p-8 border border-[#282828] hover:bg-[#282828] transition-all duration-300 shadow-xl"
+            >
+              <div className="flex h-14 w-14 flex-none items-center justify-center rounded-xl bg-[#1DB954] text-black shadow-lg">
+                <f.icon className="h-7 w-7 fill-black" />
+              </div>
+              <div>
+                <h3 className="text-xl font-bold text-white group-hover:text-[#1DB954] transition-colors">
+                  {f.title}
+                </h3>
+                <p className="mt-2 text-sm text-[#b3b3b3] leading-relaxed">{f.body}</p>
+              </div>
+            </div>
           ))}
-        </StaggerChildren>
-      </section>
-
-      {/* HOW */}
-      <section id="how" className="border-t border-border/60 bg-paper-soft/60">
-        <div className="mx-auto max-w-6xl px-6 py-24">
-          <FadeIn>
-            <h2 className="serif text-4xl md:text-5xl">Three unhurried steps.</h2>
-          </FadeIn>
-          <StaggerChildren className="mt-12 grid gap-8 md:grid-cols-3">
-            {STEPS.map((s, i) => (
-              <StaggerItem key={s.title}>
-                <div className="rounded-xl border border-border/60 bg-card p-7">
-                  <div className="serif text-6xl text-gold/70">{String(i + 1).padStart(2, "0")}</div>
-                  <div className="mt-4 serif text-2xl">{s.title}</div>
-                  <p className="mt-2 text-sm text-muted-foreground">{s.body}</p>
-                </div>
-              </StaggerItem>
-            ))}
-          </StaggerChildren>
         </div>
       </section>
 
-      {/* DOCTOR CTA */}
-      <section className="mx-auto max-w-6xl px-6 py-24">
-        <FadeIn>
-          <div className="relative overflow-hidden rounded-3xl border border-border/60 bg-ink p-10 text-paper md:p-16">
-            <div
-              className="pointer-events-none absolute inset-0 opacity-[0.15]"
-              style={{
-                backgroundImage: "radial-gradient(oklch(0.75 0.13 82) 1px, transparent 1px)",
-                backgroundSize: "24px 24px",
-              }}
-            />
-            <div className="relative grid gap-8 md:grid-cols-[1.4fr_1fr] md:items-end">
-              <div>
-                <div className="text-xs uppercase tracking-[0.2em] text-paper/60">
-                  For clinicians
-                </div>
-                <h2 className="serif mt-3 text-4xl leading-[1.05] md:text-5xl">
-                  A verified space that respects your license — and your time.
-                </h2>
+      {/* STEPS SECTION */}
+      <section id="how" className="border-t border-[#282828] bg-[#121212] py-24">
+        <div className="mx-auto max-w-7xl px-6">
+          <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Three Simple Steps</h2>
+          <div className="mt-12 grid gap-8 md:grid-cols-3">
+            {STEPS.map((s, i) => (
+              <div key={s.title} className="rounded-2xl bg-[#181818] p-8 border border-[#282828]">
+                <div className="text-5xl font-extrabold text-[#1DB954]">0{i + 1}</div>
+                <h3 className="mt-4 text-2xl font-bold text-white">{s.title}</h3>
+                <p className="mt-2 text-sm text-[#b3b3b3] leading-relaxed">{s.body}</p>
               </div>
-              <div className="flex md:justify-end">
-                <Magnetic>
-                  <Button asChild size="lg" variant="secondary" className="h-12 px-6">
-                    <Link to="/for-doctors">
-                      Explore for doctors <ArrowRight className="ml-1.5 h-4 w-4" />
-                    </Link>
-                  </Button>
-                </Magnetic>
-              </div>
-            </div>
+            ))}
           </div>
-        </FadeIn>
+        </div>
+      </section>
+
+      {/* DOCTOR BANNER SECTION */}
+      <section className="mx-auto max-w-7xl px-6 py-24">
+        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#8b5cf6]/30 via-[#181818] to-[#121212] p-12 border border-[#282828]">
+          <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
+            <div className="max-w-2xl">
+              <div className="text-xs font-bold uppercase tracking-wider text-[#8b5cf6]">
+                Physician Portal
+              </div>
+              <h2 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">
+                Are you a licensed medical doctor?
+              </h2>
+              <p className="mt-2 text-sm text-[#b3b3b3]">
+                Get verified with your license and access the Aidra clinician platform.
+              </p>
+            </div>
+            <Link
+              to="/for-doctors"
+              className="rounded-full bg-white px-8 py-4 text-sm font-extrabold text-black shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+            >
+              Doctor Verification <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+        </div>
       </section>
 
       <SiteFooter />
@@ -208,44 +185,28 @@ function PatientLanding() {
 const FEATURES = [
   {
     icon: MessageSquareText,
-    title: "Conversations that pause before they answer.",
-    body: "Ask what's on your mind. Aidra listens for context — sleep, stress, medication — before it responds.",
+    title: "AI Medical Consultation Stream",
+    body: "Streamed responses for symptom diagnosis, medication questions, and health advice powered by Gemini Medical.",
   },
   {
     icon: LineChart,
-    title: "BMI, tracked kindly over time.",
-    body: "Log height and weight in seconds. See the trend, not just the number, on a quiet, honest chart.",
+    title: "Glowing BMI & Vitals Analytics",
+    body: "Log height and weight entries effortlessly and watch your physical health trend across interactive health charts.",
   },
   {
     icon: HeartPulse,
-    title: "Your health, in one place.",
-    body: "A gentle home for the conversations, entries, and updates you'd rather not scatter across apps.",
+    title: "All-in-One Health Hub",
+    body: "Keep your consultation threads, health records, and physician notes securely stored in your personal library.",
   },
   {
     icon: ShieldCheck,
-    title: "Verified doctors, when you need one.",
-    body: "Every clinician on Aidra passes a paid license review. No noise, no fake credentials.",
+    title: "Verified Physician Network",
+    body: "Every doctor on Aidra undergoes manual license verification to guarantee authentic clinical expertise.",
   },
 ];
 
 const STEPS = [
-  { title: "Sign in", body: "Email or Google. We keep it simple and secure — no passwords in the clear." },
-  { title: "Say hello", body: "Tell Aidra what's going on. It replies like a person who read carefully." },
-  { title: "Come back", body: "Your BMI trend, past conversations, and notes wait quietly for you." },
+  { title: "Sign Up in Seconds", body: "Quick sign-in with Google or Email. Your health data stays completely private." },
+  { title: "Ask Aidra Anything", body: "Describe your symptoms or health queries and receive instant, structured AI explanations." },
+  { title: "Track Vitals Over Time", body: "Log your weight and BMI to view glowing progress charts and health trends." },
 ];
-
-function FeatureCard({ icon: Icon, title, body }: (typeof FEATURES)[number]) {
-  return (
-    <div className="group relative overflow-hidden rounded-xl border border-border/60 bg-card p-7 transition-shadow hover:shadow-editorial">
-      <div className="flex items-start gap-5">
-        <div className="flex h-11 w-11 flex-none items-center justify-center rounded-lg bg-primary/10 text-primary">
-          <Icon className="h-5 w-5" />
-        </div>
-        <div>
-          <div className="serif text-2xl leading-tight">{title}</div>
-          <p className="mt-2 text-sm text-muted-foreground">{body}</p>
-        </div>
-      </div>
-    </div>
-  );
-}

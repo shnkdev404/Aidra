@@ -2,10 +2,9 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2 } from "lucide-react";
+import { Loader2, HeartPulse } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
-import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
@@ -13,12 +12,12 @@ const emailSchema = z
   .string()
   .trim()
   .toLowerCase()
-  .email("Enter a valid email")
+  .email("Enter a valid email address")
   .max(255);
 const passwordSchema = z
   .string()
-  .min(8, "At least 8 characters")
-  .max(128, "Too long");
+  .min(8, "Password must be at least 8 characters")
+  .max(128, "Password too long");
 const nameSchema = z
   .string()
   .trim()
@@ -44,7 +43,6 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
     e.preventDefault();
     setLoading(true);
     try {
-      // Validate with Zod (never trust raw input, protects against injection-shaped payloads)
       const parsedEmail = emailSchema.parse(email);
       const parsedPassword = passwordSchema.parse(password);
 
@@ -59,70 +57,83 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
           },
         });
         if (error) throw error;
-        toast.success("Welcome to Aidra");
+        toast.success("Welcome to Aidra Health");
       } else {
         const { error } = await supabase.auth.signInWithPassword({
           email: parsedEmail,
           password: parsedPassword,
         });
         if (error) throw error;
-        toast.success("Signed in");
+        toast.success("Signed in successfully");
       }
       navigate({ to: onSuccessRedirect });
     } catch (err) {
-      const msg = err instanceof z.ZodError ? err.issues[0]?.message : err instanceof Error ? err.message : "Something went wrong";
+      const msg =
+        err instanceof z.ZodError
+          ? err.issues[0]?.message
+          : err instanceof Error
+          ? err.message
+          : "Something went wrong";
       toast.error(msg);
     } finally {
       setLoading(false);
     }
   }
 
-  
   async function handleGoogle() {
-  setLoading(true);
-
-  try {
-    const { error } = await supabase.auth.signInWithOAuth({
-      provider: "google",
-      options: {
-        redirectTo: `${window.location.origin}/`,
-      },
-    });
-
-    if (error) throw error;
-  } catch (err) {
-    toast.error(err instanceof Error ? err.message : "Google sign-in failed");
-    setLoading(false);
+    setLoading(true);
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}/`,
+        },
+      });
+      if (error) throw error;
+    } catch (err) {
+      toast.error(err instanceof Error ? err.message : "Google sign-in failed");
+      setLoading(false);
+    }
   }
-}
 
   const isDoctor = variant === "doctor";
-  const primaryLabel = mode === "signup" ? (isDoctor ? "Create doctor account" : "Create account") : "Sign in";
+  const primaryLabel =
+    mode === "signup" ? (isDoctor ? "Apply as Doctor" : "Create Account") : "Sign In";
 
   return (
-    <div className="w-full max-w-md">
-      <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">
-        {isDoctor ? "Clinician access" : "Patient access"}
+    <div className="w-full max-w-md rounded-2xl bg-[#181818] p-8 border border-[#282828] shadow-2xl">
+      <div className="flex justify-center mb-4">
+        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954] text-black shadow-lg">
+          <HeartPulse className="h-6 w-6 fill-black" />
+        </div>
       </div>
-      <h1 className="serif mt-3 text-4xl md:text-5xl">
-        {mode === "signup"
-          ? isDoctor
-            ? "Apply as a doctor."
-            : "Begin, gently."
-          : "Welcome back."}
-      </h1>
-      <p className="mt-3 text-sm text-muted-foreground">
-        {mode === "signup"
-          ? isDoctor
-            ? "After signup you'll complete a paid license verification. It's a one-time fee."
-            : "Free to start. Your data stays yours."
-          : "Sign in to pick up where you left off."}
-      </p>
 
-      <form onSubmit={handleSubmit} className="mt-8 space-y-4">
+      <div className="text-center">
+        <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">
+          {isDoctor ? "Clinician Portal" : "Patient Access"}
+        </div>
+        <h1 className="mt-2 text-3xl font-extrabold text-white">
+          {mode === "signup"
+            ? isDoctor
+              ? "Apply as Doctor"
+              : "Create your account"
+            : "Log in to Aidra"}
+        </h1>
+        <p className="mt-2 text-xs text-[#a7a7a7]">
+          {mode === "signup"
+            ? isDoctor
+              ? "Complete verification to unlock doctor credentials."
+              : "Free 24/7 AI health consultations."
+            : "Enter your details to pick up where you left off."}
+        </p>
+      </div>
+
+      <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         {mode === "signup" && (
           <div className="space-y-1.5">
-            <Label htmlFor="name">Full name</Label>
+            <Label htmlFor="name" className="text-xs font-bold text-[#b3b3b3]">
+              Full Name
+            </Label>
             <Input
               id="name"
               value={name}
@@ -130,11 +141,15 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
               autoComplete="name"
               maxLength={80}
               required
+              className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+              placeholder="Sarah Connor"
             />
           </div>
         )}
         <div className="space-y-1.5">
-          <Label htmlFor="email">Email</Label>
+          <Label htmlFor="email" className="text-xs font-bold text-[#b3b3b3]">
+            Email Address
+          </Label>
           <Input
             id="email"
             type="email"
@@ -143,10 +158,14 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
             autoComplete="email"
             maxLength={255}
             required
+            className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+            placeholder="name@example.com"
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="password">Password</Label>
+          <Label htmlFor="password" className="text-xs font-bold text-[#b3b3b3]">
+            Password
+          </Label>
           <Input
             id="password"
             type="password"
@@ -156,41 +175,46 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
             minLength={8}
             maxLength={128}
             required
+            className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
           />
-          {mode === "signup" && (
-            <p className="text-xs text-muted-foreground">At least 8 characters. Checked against known-breach lists.</p>
-          )}
         </div>
 
-        <Button type="submit" className="h-11 w-full" disabled={loading}>
-          {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : primaryLabel}
-        </Button>
+        <button
+          type="submit"
+          className="mt-2 h-12 w-full rounded-full bg-[#1DB954] font-extrabold text-black shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50"
+          disabled={loading}
+        >
+          {loading ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : primaryLabel}
+        </button>
       </form>
 
-      <div className="my-6 flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-muted-foreground">
-        <div className="h-px flex-1 bg-border" />
-        or
-        <div className="h-px flex-1 bg-border" />
+      <div className="my-6 flex items-center gap-3 text-xs font-bold text-[#a7a7a7]">
+        <div className="h-px flex-1 bg-[#282828]" />
+        OR
+        <div className="h-px flex-1 bg-[#282828]" />
       </div>
 
-      <Button
+      <button
         type="button"
-        variant="outline"
-        className="h-11 w-full gap-3"
+        className="flex h-12 w-full items-center justify-center gap-3 rounded-full bg-[#242424] border border-[#282828] text-xs font-bold text-white hover:bg-[#2a2a2a] transition-all disabled:opacity-50"
         onClick={handleGoogle}
         disabled={loading}
       >
         <GoogleGlyph /> Continue with Google
-      </Button>
+      </button>
 
-      <div className="mt-6 text-sm text-muted-foreground">
+      <div className="mt-6 text-center text-xs text-[#a7a7a7]">
         {mode === "signup" ? "Already have an account?" : "New to Aidra?"}{" "}
         <button
           type="button"
-          className="text-primary underline underline-offset-4"
+          className="font-bold text-[#1DB954] hover:underline"
           onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
         >
-          {mode === "signup" ? "Sign in" : (isDoctor ? "Apply as a doctor" : "Create an account")}
+          {mode === "signup"
+            ? "Log in"
+            : isDoctor
+            ? "Apply as doctor"
+            : "Sign up free"}
         </button>
       </div>
     </div>
