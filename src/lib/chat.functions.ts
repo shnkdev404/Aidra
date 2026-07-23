@@ -103,28 +103,43 @@ export const sendMessage = createServerFn({ method: "POST" })
       ...(history ?? []).map((m) => ({ role: m.role, content: m.content })),
     ];
 
-    // UPDATED: Now checks for your Gemini Key instead of Lovable
-    const key = process.env.VITE_GEMINI_API_KEY;
+    // Read Gemini API Key with fallbacks
+    const key = process.env.VITE_GEMINI_API_KEY || process.env.GEMINI_API_KEY;
     if (!key) throw new Error("AI service is not configured. Missing VITE_GEMINI_API_KEY.");
 
-    // UPDATED: Calls Google's OpenAI-compatible endpoint directly
-    const res = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${key}`,
-      },
-      body: JSON.stringify({
-        model: "gemini-3.5-flash",
-        messages,
-      }),
-    });
+    // Calls Google's OpenAI-compatible endpoint with active model
+    const modelsToTry = ["gemini-3.6-flash", "gemini-2.0-flash-lite"];
+    let res: Response | null = null;
+    let lastErrorText = "";
 
-    if (!res.ok) {
-      const text = await res.text();
-      if (res.status === 429) throw new Error("Rate limit reached — please try again in a moment.");
-      if (res.status === 402) throw new Error("AI credits exhausted. Please check your Google AI account.");
-      throw new Error(`AI error: ${res.status} ${text.slice(0, 200)}`);
+    for (const model of modelsToTry) {
+      try {
+        const candidate = await fetch("https://generativelanguage.googleapis.com/v1beta/openai/chat/completions", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${key}`,
+          },
+          body: JSON.stringify({
+            model,
+            messages,
+          }),
+        });
+
+        if (candidate.ok) {
+          res = candidate;
+          break;
+        } else {
+          lastErrorText = await candidate.text();
+          console.warn(`[Gemini API] Model ${model} failed (${candidate.status}): ${lastErrorText.slice(0, 150)}`);
+        }
+      } catch (err) {
+        console.warn(`[Gemini API] Request error for ${model}:`, err);
+      }
+    }
+
+    if (!res || !res.ok) {
+      throw new Error(`AI service error: ${lastErrorText.slice(0, 200) || "Unable to contact AI provider."}`);
     }
     const json = (await res.json()) as {
       choices: { message: { content: string } }[];
