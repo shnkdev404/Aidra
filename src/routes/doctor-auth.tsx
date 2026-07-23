@@ -1,7 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { AuthCard } from "@/components/auth/AuthCard";
-import { FadeIn } from "@/components/animated/FadeIn";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup"]).optional(),
@@ -22,37 +21,36 @@ export const Route = createFileRoute("/doctor-auth")({
 function DoctorAuthPage() {
   const { mode } = Route.useSearch();
   return (
-    <div className="relative min-h-screen bg-ink text-paper">
-      <div
-        className="pointer-events-none absolute inset-0 opacity-20"
-        style={{
-          backgroundImage: "radial-gradient(oklch(0.75 0.13 82) 1px, transparent 1px)",
-          backgroundSize: "28px 28px",
-        }}
-      />
+    <div className="relative min-h-screen bg-canvas text-ink selection:bg-primary selection:text-primary-foreground bg-geist-mesh">
       <div className="relative mx-auto grid min-h-screen max-w-6xl grid-cols-1 gap-8 px-6 py-10 md:grid-cols-2 md:items-center md:py-16">
-        <FadeIn className="hidden md:block">
-          <Link to="/for-doctors" className="serif inline-block text-2xl">Aidra <span className="text-gold">for doctors</span></Link>
-          <h2 className="serif mt-12 max-w-md text-balance text-5xl leading-[1.05]">
+        <div className="hidden md:block">
+          <Link to="/for-doctors" className="inline-flex items-center gap-2.5">
+            <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-primary text-primary-foreground">
+              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
+                <path d="M12 2L2 22h20L12 2z" />
+              </svg>
+            </div>
+            <span className="text-xl font-semibold tracking-tight text-ink">Aidra</span>
+            <span className="font-mono text-[11px] font-medium text-[#0070f3] uppercase tracking-wider bg-[#d3e5ff]/30 px-2 py-0.5 rounded-[4px]">FOR DOCTORS</span>
+          </Link>
+
+          <h2 className="mt-12 max-w-md text-balance text-4xl font-semibold tracking-tighter text-ink leading-[1.1]">
             A verified space. Real license review. Zero noise.
           </h2>
-          <p className="mt-6 max-w-sm text-paper/70">
-            Sign in, or apply for verification. Every clinician here has passed a paid,
-            manual review.
+          <p className="mt-6 max-w-sm text-sm text-body leading-relaxed">
+            Sign in, or apply for clinician verification. Every doctor here undergoes manual license verification.
           </p>
-          <p className="mt-16 text-xs uppercase tracking-[0.2em] text-paper/50">
+          <p className="mt-16 font-mono text-xs uppercase tracking-wider text-mute">
             Not a doctor?{" "}
-            <Link to="/auth" className="text-paper underline underline-offset-4">
+            <Link to="/auth" className="text-ink font-medium underline underline-offset-4">
               Patient sign in
             </Link>
           </p>
-        </FadeIn>
+        </div>
 
-        <FadeIn delay={0.1} className="mx-auto w-full max-w-md md:ml-auto">
-          <div className="rounded-2xl border border-paper/15 bg-paper p-8 text-ink shadow-editorial md:p-10">
-            <AuthCard variant="doctor" initialMode={mode ?? "signin"} onSuccessRedirect="/doctor/verify" />
-          </div>
-        </FadeIn>
+        <div className="mx-auto w-full max-w-md md:ml-auto">
+          <AuthCard variant="doctor" initialMode={mode ?? "signin"} onSuccessRedirect="/doctor/verify" />
+        </div>
       </div>
     </div>
   );

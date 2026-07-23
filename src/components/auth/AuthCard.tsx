@@ -2,7 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useNavigate } from "@tanstack/react-router";
 import { z } from "zod";
 import { toast } from "sonner";
-import { Loader2, HeartPulse } from "lucide-react";
+import { Loader2 } from "lucide-react";
 
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
@@ -98,40 +98,42 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
 
   const isDoctor = variant === "doctor";
   const primaryLabel =
-    mode === "signup" ? (isDoctor ? "Apply as Doctor" : "Create Account") : "Sign In";
+    mode === "signup" ? (isDoctor ? "Apply as Doctor" : "Create Account") : "Log In";
 
   return (
-    <div className="w-full max-w-md rounded-2xl bg-[#181818] p-8 border border-[#282828] shadow-2xl">
+    <div className="w-full max-w-md rounded-xl border border-border bg-canvas-elevated p-8 shadow-floating">
       <div className="flex justify-center mb-4">
-        <div className="flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954] text-black shadow-lg">
-          <HeartPulse className="h-6 w-6 fill-black" />
+        <div className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs">
+          <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
+            <path d="M12 2L2 22h20L12 2z" />
+          </svg>
         </div>
       </div>
 
       <div className="text-center">
-        <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">
-          {isDoctor ? "Clinician Portal" : "Patient Access"}
+        <div className="font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3]">
+          {isDoctor ? "CLINICIAN PORTAL" : "PATIENT ACCESS"}
         </div>
-        <h1 className="mt-2 text-3xl font-extrabold text-white">
+        <h1 className="mt-2 text-2xl font-semibold tracking-tight text-ink">
           {mode === "signup"
             ? isDoctor
               ? "Apply as Doctor"
               : "Create your account"
             : "Log in to Aidra"}
         </h1>
-        <p className="mt-2 text-xs text-[#a7a7a7]">
+        <p className="mt-1.5 text-xs text-body">
           {mode === "signup"
             ? isDoctor
               ? "Complete verification to unlock doctor credentials."
               : "Free 24/7 AI health consultations."
-            : "Enter your details to pick up where you left off."}
+            : "Enter your credentials to continue."}
         </p>
       </div>
 
       <form onSubmit={handleSubmit} className="mt-6 space-y-4">
         {mode === "signup" && (
           <div className="space-y-1.5">
-            <Label htmlFor="name" className="text-xs font-bold text-[#b3b3b3]">
+            <Label htmlFor="name" className="text-xs font-medium text-body">
               Full Name
             </Label>
             <Input
@@ -141,13 +143,13 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
               autoComplete="name"
               maxLength={80}
               required
-              className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+              className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
               placeholder="Sarah Connor"
             />
           </div>
         )}
         <div className="space-y-1.5">
-          <Label htmlFor="email" className="text-xs font-bold text-[#b3b3b3]">
+          <Label htmlFor="email" className="text-xs font-medium text-body">
             Email Address
           </Label>
           <Input
@@ -158,12 +160,12 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
             autoComplete="email"
             maxLength={255}
             required
-            className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+            className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
             placeholder="name@example.com"
           />
         </div>
         <div className="space-y-1.5">
-          <Label htmlFor="password" className="text-xs font-bold text-[#b3b3b3]">
+          <Label htmlFor="password" className="text-xs font-medium text-body">
             Password
           </Label>
           <Input
@@ -175,39 +177,39 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
             minLength={8}
             maxLength={128}
             required
-            className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+            className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
           />
         </div>
 
         <button
           type="submit"
-          className="mt-2 h-12 w-full rounded-full bg-[#1DB954] font-extrabold text-black shadow-lg hover:scale-[1.02] transition-all disabled:opacity-50"
+          className="mt-2 h-10 w-full rounded-[6px] bg-primary text-xs font-medium text-primary-foreground shadow-xs hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50"
           disabled={loading}
         >
-          {loading ? <Loader2 className="mx-auto h-5 w-5 animate-spin" /> : primaryLabel}
+          {loading ? <Loader2 className="mx-auto h-4 w-4 animate-spin" /> : primaryLabel}
         </button>
       </form>
 
-      <div className="my-6 flex items-center gap-3 text-xs font-bold text-[#a7a7a7]">
-        <div className="h-px flex-1 bg-[#282828]" />
+      <div className="my-5 flex items-center gap-3 font-mono text-[10px] text-mute">
+        <div className="h-px flex-1 bg-border" />
         OR
-        <div className="h-px flex-1 bg-[#282828]" />
+        <div className="h-px flex-1 bg-border" />
       </div>
 
       <button
         type="button"
-        className="flex h-12 w-full items-center justify-center gap-3 rounded-full bg-[#242424] border border-[#282828] text-xs font-bold text-white hover:bg-[#2a2a2a] transition-all disabled:opacity-50"
+        className="flex h-10 w-full items-center justify-center gap-2.5 rounded-[6px] border border-border bg-canvas-elevated text-xs font-medium text-ink hover:bg-canvas transition-all disabled:opacity-50 shadow-xs"
         onClick={handleGoogle}
         disabled={loading}
       >
         <GoogleGlyph /> Continue with Google
       </button>
 
-      <div className="mt-6 text-center text-xs text-[#a7a7a7]">
+      <div className="mt-6 text-center text-xs text-mute">
         {mode === "signup" ? "Already have an account?" : "New to Aidra?"}{" "}
         <button
           type="button"
-          className="font-bold text-[#1DB954] hover:underline"
+          className="font-medium text-ink hover:underline"
           onClick={() => setMode(mode === "signup" ? "signin" : "signup")}
         >
           {mode === "signup"
@@ -223,7 +225,7 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
 
 function GoogleGlyph() {
   return (
-    <svg width="16" height="16" viewBox="0 0 48 48" aria-hidden>
+    <svg width="15" height="15" viewBox="0 0 48 48" aria-hidden>
       <path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/>
       <path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/>
       <path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/>

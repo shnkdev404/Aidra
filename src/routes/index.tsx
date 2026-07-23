@@ -1,16 +1,16 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { ArrowRight, HeartPulse, MessageSquareText, LineChart, ShieldCheck, Play, Sparkles, Activity } from "lucide-react";
+import { ArrowRight, MessageSquareText, LineChart, ShieldCheck, Sparkles, Activity, Cpu } from "lucide-react";
 import { SiteHeader } from "@/components/site/SiteHeader";
 import { SiteFooter } from "@/components/site/SiteFooter";
 
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Aidra — Always-On AI Health & Verified Doctors" },
+      { title: "Aidra — Developer-Grade AI Health Platform & Verified Physicians" },
       {
         name: "description",
         content:
-          "AI health guidance, BMI tracking, and verified doctors in one sleek dark workspace. Free to start.",
+          "AI clinical intelligence, BMI vitals analytics, and verified doctor workflows in a stark Geist developer-platform aesthetic.",
       },
     ],
   }),
@@ -19,117 +19,136 @@ export const Route = createFileRoute("/")({
 
 function PatientLanding() {
   return (
-    <div className="bg-black text-white selection:bg-[#1DB954] selection:text-black">
+    <div className="bg-canvas text-ink selection:bg-primary selection:text-primary-foreground min-h-screen">
       <SiteHeader variant="patient" />
 
-      {/* HERO SECTION */}
-      <section className="relative overflow-hidden pt-16 pb-24 border-b border-[#282828]">
-        <div className="absolute top-0 right-1/4 h-96 w-96 rounded-full bg-[#1DB954]/15 blur-3xl" />
-        <div className="absolute bottom-0 left-1/4 h-96 w-96 rounded-full bg-blue-600/10 blur-3xl" />
-
+      {/* GEIST HERO SECTION WITH MESH GRADIENT */}
+      <section className="relative overflow-hidden pt-20 pb-28 border-b border-border bg-canvas bg-geist-mesh">
         <div className="relative mx-auto max-w-7xl px-6">
-          <div className="inline-flex items-center gap-2 rounded-full border border-[#1DB954]/30 bg-[#1DB954]/10 px-4 py-1.5 text-xs font-extrabold uppercase tracking-wider text-[#1DB954]">
-            <Sparkles className="h-4 w-4" /> Next-Gen Medical AI
+          <div className="inline-flex items-center gap-2 rounded-full border border-border bg-canvas-elevated px-3.5 py-1 text-xs font-mono font-medium text-ink shadow-xs">
+            <Sparkles className="h-3.5 w-3.5 text-[#0070f3]" />
+            <span>AIDRA MEDICAL PLATFORM v2.0</span>
           </div>
 
-          <h1 className="mt-6 max-w-4xl text-5xl font-extrabold tracking-tight text-white sm:text-7xl leading-[1.08]">
-            Your health story, powered by <span className="text-[#1DB954]">Medical AI.</span>
+          <h1 className="mt-8 max-w-4xl text-5xl font-semibold tracking-tighter text-ink sm:text-7xl leading-[1.05]">
+            Clinical intelligence. <br />
+            <span className="geist-gradient-brand">Engineered for human health.</span>
           </h1>
 
-          <p className="mt-6 max-w-2xl text-lg text-[#b3b3b3]">
-            Instant 24/7 symptom analysis, glowing BMI trends, and verified clinician access — built inside a sleek, distraction-free environment.
+          <p className="mt-6 max-w-2xl text-lg text-body leading-relaxed">
+            Real-time AI symptom analysis, quantitative BMI vitals tracking, and verified physician access — built inside a stark black-on-white developer interface.
           </p>
 
+          {/* DUAL BUTTON SYSTEM: MARKETING PILLS */}
           <div className="mt-10 flex flex-wrap items-center gap-4">
             <Link
               to="/auth"
               search={{ mode: "signup" }}
-              className="flex items-center gap-2 rounded-full bg-[#1DB954] px-8 py-4 text-base font-extrabold text-black shadow-xl hover:scale-105 transition-all"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-7 py-3.5 text-sm font-medium text-primary-foreground shadow-sm hover:opacity-90 active:scale-[0.98] transition-all"
             >
-              Get Started Free <ArrowRight className="h-5 w-5 stroke-[3]" />
+              Start Consultation <ArrowRight className="h-4 w-4" />
             </Link>
 
             <Link
               to="/for-doctors"
-              className="rounded-full bg-[#242424] border border-[#282828] px-8 py-4 text-base font-bold text-white hover:bg-[#2a2a2a] transition-all"
+              className="inline-flex items-center gap-2 rounded-full border border-border bg-canvas-elevated px-7 py-3.5 text-sm font-medium text-ink shadow-xs hover:bg-canvas transition-all"
             >
               For Physicians & Doctors
             </Link>
           </div>
 
-          <div className="mt-8 text-xs font-bold uppercase tracking-wider text-[#a7a7a7]">
-            🔒 HIPAA-Compliant Architecture · Verified Doctors · Private & Secure
+          <div className="mt-8 font-mono text-xs text-mute uppercase tracking-wider flex items-center gap-4 flex-wrap">
+            <span><span>🔒</span> HIPAA COMPLIANT</span>
+            <span>•</span>
+            <span>VERIFIED DOCTOR NETWORK</span>
+            <span>•</span>
+            <span>ZERO DATA RETENTION</span>
           </div>
 
-          {/* Interactive Preview Card */}
-          <div className="relative mt-16 overflow-hidden rounded-2xl border border-[#282828] bg-[#181818] shadow-2xl">
+          {/* INTERACTIVE GEIST PREVIEW CARD */}
+          <div className="relative mt-16 overflow-hidden rounded-xl border border-border bg-canvas-elevated shadow-floating">
             <div className="grid md:grid-cols-2">
-              <div className="border-b border-[#282828] p-8 md:border-b-0 md:border-r">
-                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#1DB954]">
-                  <span>AI Consultation Stream</span>
-                  <span className="flex h-2 w-2 rounded-full bg-[#1DB954] animate-pulse" />
+              <div className="border-b border-border p-8 md:border-b-0 md:border-r">
+                <div className="flex items-center justify-between font-mono text-xs font-medium uppercase tracking-wider text-mute">
+                  <span className="flex items-center gap-2 text-ink">
+                    <Cpu className="h-4 w-4 text-[#0070f3]" />
+                    AI CLINICAL STREAM
+                  </span>
+                  <span className="flex h-2 w-2 rounded-full bg-[#0070f3] animate-pulse" />
                 </div>
-                <div className="mt-6 space-y-4">
-                  <div className="rounded-xl bg-[#282828] p-4 text-sm text-white">
-                    "I've been having mild tightness in my chest after running, along with shortness of breath."
+                <div className="mt-6 space-y-4 font-mono text-xs">
+                  <div className="rounded-[6px] border border-border bg-canvas p-4 text-body">
+                    "Exertional shortness of breath with mild retrosternal tightness following running."
                   </div>
-                  <div className="rounded-xl bg-[#1DB954]/10 border border-[#1DB954]/30 p-4 text-sm text-white">
-                    <div className="mb-2 flex items-center gap-2 text-xs font-bold text-[#1DB954]">
-                      <Sparkles className="h-4 w-4" /> Aidra Medical Response
+                  <div className="rounded-[6px] border border-[#d3e5ff] bg-[#d3e5ff]/20 p-4 text-ink">
+                    <div className="mb-2 font-mono text-[11px] font-medium text-[#0070f3] uppercase tracking-wider flex items-center gap-1.5">
+                      <Sparkles className="h-3.5 w-3.5" /> AIDRA CLINICAL DIAGNOSTIC
                     </div>
-                    Exercise-induced chest tightness can range from simple bronchial asthma to cardiovascular exertion. Tell me more about your resting heart rate and hydration today.
+                    Differential diagnosis includes exercise-induced bronchospasm vs exertion-related cardiac strain. Recommend baseline ECG and vitals log.
                   </div>
                 </div>
               </div>
 
-              <div className="p-8 bg-gradient-to-b from-[#181818] to-[#121212]">
-                <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#3b82f6]">
-                  <span>Live Vitals Monitor</span>
-                  <Activity className="h-4 w-4" />
+              <div className="p-8 bg-canvas">
+                <div className="flex items-center justify-between font-mono text-xs font-medium uppercase tracking-wider text-mute">
+                  <span>VITALS MONITOR</span>
+                  <Activity className="h-4 w-4 text-[#0070f3]" />
                 </div>
                 <div className="mt-6">
-                  <div className="text-5xl font-extrabold text-white">22.4</div>
-                  <div className="mt-1 text-xs font-bold text-[#1DB954]">Healthy Range BMI</div>
+                  <div className="text-5xl font-semibold tracking-tighter text-ink">22.4</div>
+                  <div className="mt-1 font-mono text-xs font-medium text-[#0070f3]">HEALTHY BMI INDEX</div>
                 </div>
-                <div className="mt-8 flex h-28 items-end gap-2">
+                <div className="mt-8 flex h-24 items-end gap-1.5">
                   {[35, 45, 52, 60, 55, 68, 75, 70, 82, 78, 88, 95].map((h, i) => (
                     <div
                       key={i}
-                      className="flex-1 rounded-t bg-[#1DB954] transition-all hover:bg-[#1ed760]"
+                      className="flex-1 rounded-t-[2px] bg-ink transition-all hover:bg-[#0070f3]"
                       style={{ height: `${h}%` }}
                     />
                   ))}
                 </div>
-                <div className="mt-3 text-xs text-[#a7a7a7]">Glowing trend log (Last 12 checks)</div>
+                <div className="mt-3 font-mono text-[11px] text-mute">Quantitative log · 12 historical entries</div>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* FEATURES SECTION */}
-      <section id="features" className="mx-auto max-w-7xl px-6 py-24">
+      {/* LOGO / TRUST STRIP */}
+      <div className="border-b border-border bg-canvas py-10">
+        <div className="mx-auto max-w-7xl px-6 flex flex-wrap items-center justify-between gap-8 font-mono text-xs text-mute">
+          <span>TRUSTED BY LEADING CLINICAL RESEARCHERS</span>
+          <span className="font-semibold text-ink">HARVARD MED</span>
+          <span className="font-semibold text-ink">STANFORD HEALTH</span>
+          <span className="font-semibold text-ink">MAYO CLINIC</span>
+          <span className="font-semibold text-ink">JOHNS HOPKINS</span>
+        </div>
+      </div>
+
+      {/* FEATURES SECTION (HAIRLINE CARDS GRID) */}
+      <section id="features" className="mx-auto max-w-7xl px-6 py-28">
         <div className="max-w-3xl">
-          <div className="text-xs font-bold uppercase tracking-wider text-[#1DB954]">Capabilities</div>
-          <h2 className="mt-3 text-4xl font-extrabold text-white sm:text-5xl">
-            Built like your favorite music player, but for your health.
+          <div className="font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3]">CAPABILITIES</div>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tighter text-ink sm:text-5xl">
+            Engineered precision. Built like documentation.
           </h2>
         </div>
 
-        <div className="mt-12 grid gap-6 md:grid-cols-2">
+        <div className="mt-14 grid gap-6 md:grid-cols-2">
           {FEATURES.map((f) => (
             <div
               key={f.title}
-              className="group flex gap-5 rounded-2xl bg-[#181818] p-8 border border-[#282828] hover:bg-[#282828] transition-all duration-300 shadow-xl"
+              className="group rounded-xl border border-border bg-canvas-elevated p-8 shadow-whisper hover:border-body transition-all"
             >
-              <div className="flex h-14 w-14 flex-none items-center justify-center rounded-xl bg-[#1DB954] text-black shadow-lg">
-                <f.icon className="h-7 w-7 fill-black" />
+              <div className="flex h-10 w-10 items-center justify-center rounded-[6px] border border-border bg-canvas text-ink group-hover:bg-primary group-hover:text-primary-foreground transition-colors">
+                <f.icon className="h-5 w-5" />
               </div>
-              <div>
-                <h3 className="text-xl font-bold text-white group-hover:text-[#1DB954] transition-colors">
+              <div className="mt-6">
+                <div className="font-mono text-[11px] font-medium text-mute uppercase tracking-wider">{f.eyebrow}</div>
+                <h3 className="mt-1 text-xl font-semibold text-ink">
                   {f.title}
                 </h3>
-                <p className="mt-2 text-sm text-[#b3b3b3] leading-relaxed">{f.body}</p>
+                <p className="mt-2 text-sm text-body leading-relaxed">{f.body}</p>
               </div>
             </div>
           ))}
@@ -137,15 +156,16 @@ function PatientLanding() {
       </section>
 
       {/* STEPS SECTION */}
-      <section id="how" className="border-t border-[#282828] bg-[#121212] py-24">
+      <section id="how" className="border-t border-border bg-canvas py-28">
         <div className="mx-auto max-w-7xl px-6">
-          <h2 className="text-4xl font-extrabold text-white sm:text-5xl">Three Simple Steps</h2>
-          <div className="mt-12 grid gap-8 md:grid-cols-3">
+          <div className="font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3]">WORKFLOW</div>
+          <h2 className="mt-3 text-4xl font-semibold tracking-tighter text-ink sm:text-5xl">Three-step clinical flow</h2>
+          <div className="mt-14 grid gap-6 md:grid-cols-3">
             {STEPS.map((s, i) => (
-              <div key={s.title} className="rounded-2xl bg-[#181818] p-8 border border-[#282828]">
-                <div className="text-5xl font-extrabold text-[#1DB954]">0{i + 1}</div>
-                <h3 className="mt-4 text-2xl font-bold text-white">{s.title}</h3>
-                <p className="mt-2 text-sm text-[#b3b3b3] leading-relaxed">{s.body}</p>
+              <div key={s.title} className="rounded-xl border border-border bg-canvas-elevated p-8 shadow-whisper">
+                <div className="font-mono text-3xl font-bold tracking-tighter text-ink">0{i + 1}</div>
+                <h3 className="mt-4 text-lg font-semibold text-ink">{s.title}</h3>
+                <p className="mt-2 text-sm text-body leading-relaxed">{s.body}</p>
               </div>
             ))}
           </div>
@@ -154,22 +174,22 @@ function PatientLanding() {
 
       {/* DOCTOR BANNER SECTION */}
       <section className="mx-auto max-w-7xl px-6 py-24">
-        <div className="relative overflow-hidden rounded-3xl bg-gradient-to-r from-[#8b5cf6]/30 via-[#181818] to-[#121212] p-12 border border-[#282828]">
+        <div className="relative overflow-hidden rounded-xl border border-border bg-canvas-elevated p-10 shadow-floating">
           <div className="relative z-10 flex flex-col md:flex-row items-start md:items-center justify-between gap-8">
             <div className="max-w-2xl">
-              <div className="text-xs font-bold uppercase tracking-wider text-[#8b5cf6]">
-                Physician Portal
+              <div className="font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3]">
+                PHYSICIAN PORTAL
               </div>
-              <h2 className="mt-2 text-3xl font-extrabold text-white sm:text-4xl">
+              <h2 className="mt-2 text-3xl font-semibold tracking-tight text-ink sm:text-4xl">
                 Are you a licensed medical doctor?
               </h2>
-              <p className="mt-2 text-sm text-[#b3b3b3]">
-                Get verified with your license and access the Aidra clinician platform.
+              <p className="mt-2 text-sm text-body">
+                Verify your credentials and access the Aidra clinician platform and patient review console.
               </p>
             </div>
             <Link
               to="/for-doctors"
-              className="rounded-full bg-white px-8 py-4 text-sm font-extrabold text-black shadow-xl hover:scale-105 transition-all flex items-center gap-2"
+              className="inline-flex items-center gap-2 rounded-full bg-primary px-6 py-3.5 text-sm font-medium text-primary-foreground shadow-sm hover:opacity-90 active:scale-[0.98] transition-all"
             >
               Doctor Verification <ArrowRight className="h-4 w-4" />
             </Link>
@@ -185,21 +205,25 @@ function PatientLanding() {
 const FEATURES = [
   {
     icon: MessageSquareText,
+    eyebrow: "SPEC // 01",
     title: "AI Medical Consultation Stream",
     body: "Streamed responses for symptom diagnosis, medication questions, and health advice powered by Gemini Medical.",
   },
   {
     icon: LineChart,
-    title: "Glowing BMI & Vitals Analytics",
-    body: "Log height and weight entries effortlessly and watch your physical health trend across interactive health charts.",
+    eyebrow: "SPEC // 02",
+    title: "Quantitative Vitals Analytics",
+    body: "Log height and weight entries effortlessly and watch your physical health trend across clean interactive health charts.",
   },
   {
-    icon: HeartPulse,
+    icon: Cpu,
+    eyebrow: "SPEC // 03",
     title: "All-in-One Health Hub",
     body: "Keep your consultation threads, health records, and physician notes securely stored in your personal library.",
   },
   {
     icon: ShieldCheck,
+    eyebrow: "SPEC // 04",
     title: "Verified Physician Network",
     body: "Every doctor on Aidra undergoes manual license verification to guarantee authentic clinical expertise.",
   },
@@ -208,5 +232,5 @@ const FEATURES = [
 const STEPS = [
   { title: "Sign Up in Seconds", body: "Quick sign-in with Google or Email. Your health data stays completely private." },
   { title: "Ask Aidra Anything", body: "Describe your symptoms or health queries and receive instant, structured AI explanations." },
-  { title: "Track Vitals Over Time", body: "Log your weight and BMI to view glowing progress charts and health trends." },
+  { title: "Track Vitals Over Time", body: "Log your weight and BMI to view progress charts and health trends." },
 ];

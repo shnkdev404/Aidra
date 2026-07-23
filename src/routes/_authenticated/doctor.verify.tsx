@@ -79,14 +79,14 @@ function DoctorVerifyPage() {
     <AppShell>
       <div className="space-y-6 pb-12">
         {/* Verified Clinician Banner Header */}
-        <div className="rounded-2xl bg-gradient-to-r from-[#8b5cf6]/30 via-[#181818] to-[#121212] p-8 border border-[#282828]">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#8b5cf6]">
-            <BadgeCheck className="h-4 w-4" /> Verified Clinician Badge
+        <div className="rounded-xl border border-border bg-canvas-elevated p-8 shadow-whisper">
+          <div className="flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3]">
+            <BadgeCheck className="h-3.5 w-3.5" /> VERIFIED CLINICIAN BADGE
           </div>
-          <h1 className="mt-2 text-4xl font-extrabold tracking-tight text-white sm:text-5xl">
+          <h1 className="mt-2 text-3xl font-semibold tracking-tighter text-ink sm:text-4xl">
             Doctor Portal Verification
           </h1>
-          <p className="mt-2 text-sm text-[#b3b3b3]">
+          <p className="mt-2 text-sm text-body">
             Submit your medical license to unlock verified physician status on Aidra.
           </p>
         </div>
@@ -95,9 +95,9 @@ function DoctorVerifyPage() {
         <StatusStrip status={status} />
 
         {/* Form Container */}
-        <form onSubmit={handleSave} className="rounded-2xl bg-[#181818] p-6 md:p-8 border border-[#282828]">
-          <div className="flex items-center gap-2 text-xs font-bold uppercase tracking-wider text-[#1DB954] mb-6">
-            <Stethoscope className="h-4 w-4" /> Professional Credentials
+        <form onSubmit={handleSave} className="rounded-xl border border-border bg-canvas-elevated p-6 md:p-8 shadow-whisper">
+          <div className="flex items-center gap-2 font-mono text-xs font-medium uppercase tracking-wider text-[#0070f3] mb-6">
+            <Stethoscope className="h-3.5 w-3.5" /> PROFESSIONAL CREDENTIALS
           </div>
 
           <div className="grid gap-4 md:grid-cols-2">
@@ -108,7 +108,7 @@ function DoctorVerifyPage() {
                 disabled={!canEdit}
                 maxLength={120}
                 required
-                className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
                 placeholder="Dr. Sarah Connor"
               />
             </Field>
@@ -120,7 +120,7 @@ function DoctorVerifyPage() {
                 disabled={!canEdit}
                 maxLength={80}
                 required
-                className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
                 placeholder="MD-984210"
               />
             </Field>
@@ -133,7 +133,7 @@ function DoctorVerifyPage() {
                 placeholder="e.g. Cardiology / Internal Medicine"
                 maxLength={80}
                 required
-                className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
               />
             </Field>
 
@@ -144,7 +144,7 @@ function DoctorVerifyPage() {
                 disabled={!canEdit}
                 maxLength={80}
                 required
-                className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
                 placeholder="United States"
               />
             </Field>
@@ -159,20 +159,20 @@ function DoctorVerifyPage() {
                 rows={4}
                 maxLength={1000}
                 placeholder="Describe your background and clinical focus for patients..."
-                className="bg-[#242424] border-none text-white focus:ring-2 focus:ring-[#1DB954]"
+                className="rounded-[6px] border border-border bg-canvas text-ink focus:bg-canvas-elevated focus:border-ink"
               />
             </Field>
           </div>
 
-          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-[#282828] pt-6">
-            <div className="text-xs text-[#a7a7a7]">
+          <div className="mt-8 flex flex-wrap items-center justify-between gap-4 border-t border-border pt-6">
+            <div className="text-xs text-mute">
               Free manual license verification by the Aidra medical review board.
             </div>
             <div className="flex gap-3">
               <button
                 type="submit"
                 disabled={!canEdit || save.isPending}
-                className="rounded-full bg-[#242424] px-5 py-2.5 text-xs font-bold text-white hover:bg-[#2a2a2a] transition-all disabled:opacity-50"
+                className="rounded-[6px] border border-border bg-canvas-elevated px-4 py-2 text-xs font-medium text-ink hover:bg-canvas transition-all disabled:opacity-50"
               >
                 {save.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Save Draft"}
               </button>
@@ -182,7 +182,7 @@ function DoctorVerifyPage() {
                 onClick={() => {
                   save.mutateAsync().then(() => submit.mutate());
                 }}
-                className="rounded-full bg-[#1DB954] px-6 py-2.5 text-xs font-extrabold text-black shadow-lg hover:scale-105 transition-all disabled:opacity-50"
+                className="rounded-[6px] bg-primary px-4 py-2 text-xs font-medium text-primary-foreground shadow-xs hover:opacity-90 active:scale-[0.98] transition-all disabled:opacity-50"
               >
                 {submit.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : "Submit for Verification"}
               </button>
@@ -191,9 +191,9 @@ function DoctorVerifyPage() {
         </form>
 
         {app.data?.admin_notes && (
-          <div className="rounded-2xl bg-[#181818] p-5 border border-[#282828]">
-            <div className="text-xs font-bold uppercase tracking-wider text-[#a7a7a7]">Verification Notes</div>
-            <p className="mt-2 text-sm text-white">{app.data.admin_notes}</p>
+          <div className="rounded-xl border border-border bg-canvas-elevated p-5 shadow-whisper">
+            <div className="font-mono text-xs font-medium uppercase tracking-wider text-mute">VERIFICATION NOTES</div>
+            <p className="mt-2 text-sm text-ink">{app.data.admin_notes}</p>
           </div>
         )}
       </div>
@@ -204,8 +204,8 @@ function DoctorVerifyPage() {
 function Field({ label, required, children }: { label: string; required?: boolean; children: React.ReactNode }) {
   return (
     <div className="space-y-1.5">
-      <Label className="text-xs font-bold text-[#b3b3b3]">
-        {label} {required && <span className="text-[#1DB954]">*</span>}
+      <Label className="text-xs font-medium text-body">
+        {label} {required && <span className="text-[#ee0000]">*</span>}
       </Label>
       {children}
     </div>
@@ -218,44 +218,44 @@ function StatusStrip({ status }: { status: string }) {
       icon: ShieldCheck,
       label: "Draft Application",
       body: "Fill out your credentials and submit for verification review.",
-      tone: "text-white bg-[#242424]",
+      tone: "text-ink bg-canvas-elevated border border-border",
     },
     pending_payment: {
       icon: Clock,
       label: "Verification Pending",
       body: "Your application is queued for medical review.",
-      tone: "text-amber-400 bg-amber-400/10 border border-amber-400/20",
+      tone: "text-[#ab570a] bg-[#ffefcf] border border-[#f5a623]/30",
     },
     submitted: {
       icon: Clock,
       label: "Under Verification Review",
       body: "Our team is confirming your license with your medical board (1–3 business days).",
-      tone: "text-[#3b82f6] bg-[#3b82f6]/10 border border-[#3b82f6]/20",
+      tone: "text-[#0070f3] bg-[#d3e5ff]/30 border border-[#0070f3]/30",
     },
     approved: {
       icon: BadgeCheck,
       label: "Verified Physician Status Active",
       body: "Congratulations! Your verified clinician badge is live on Aidra.",
-      tone: "text-[#1DB954] bg-[#1DB954]/10 border border-[#1DB954]/20",
+      tone: "text-ink bg-hairline-soft border border-ink",
     },
     rejected: {
       icon: ShieldCheck,
       label: "Updates Required",
       body: "Please review the notes below and update your application details.",
-      tone: "text-red-400 bg-red-400/10 border border-red-400/20",
+      tone: "text-[#ee0000] bg-[#ee0000]/10 border border-[#ee0000]/20",
     },
   } as const;
 
   const s = map[status as keyof typeof map] ?? map.draft;
 
   return (
-    <div className={`flex items-center gap-4 rounded-2xl p-5 shadow-lg ${s.tone}`}>
-      <div className="flex h-10 w-10 flex-none items-center justify-center rounded-full bg-black/40">
+    <div className={`flex items-center gap-4 rounded-xl p-5 shadow-whisper ${s.tone}`}>
+      <div className="flex h-9 w-9 flex-none items-center justify-center rounded-[6px] border border-current bg-canvas/50">
         <s.icon className="h-5 w-5" />
       </div>
       <div>
-        <div className="text-lg font-bold">{s.label}</div>
-        <div className="text-xs opacity-80">{s.body}</div>
+        <div className="text-base font-semibold">{s.label}</div>
+        <div className="text-xs opacity-90">{s.body}</div>
       </div>
     </div>
   );

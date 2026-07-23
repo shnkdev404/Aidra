@@ -4,7 +4,7 @@ import { useServerFn } from "@tanstack/react-start";
 import { useEffect, useRef, useState, type FormEvent } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import ReactMarkdown from "react-markdown";
-import { ArrowLeft, Send, Loader2, Sparkles, HeartPulse, Play, Activity } from "lucide-react";
+import { ArrowLeft, Send, Loader2, Sparkles, Activity } from "lucide-react";
 import { toast } from "sonner";
 
 import { AppShell } from "@/components/app/AppShell";
@@ -69,8 +69,8 @@ function ChatThreadPage() {
     return (
       <AppShell>
         <div className="mx-auto max-w-2xl p-10 text-center">
-          <div className="text-red-400 font-bold">{(q.error as Error).message}</div>
-          <Button className="mt-4 bg-[#1DB954] text-black hover:scale-105" onClick={() => router.invalidate()}>
+          <div className="text-[#ee0000] font-mono text-xs">{(q.error as Error).message}</div>
+          <Button className="mt-4 bg-primary text-primary-foreground hover:opacity-90" onClick={() => router.invalidate()}>
             Retry Session
           </Button>
         </div>
@@ -82,29 +82,31 @@ function ChatThreadPage() {
 
   return (
     <AppShell>
-      <div className="flex h-[calc(100vh-140px)] flex-col rounded-2xl overflow-hidden bg-[#121212] border border-[#282828]">
+      <div className="flex h-[calc(100vh-140px)] flex-col rounded-xl border border-border bg-canvas-elevated shadow-whisper overflow-hidden">
         {/* Consultation Banner Header */}
-        <div className="flex items-center justify-between border-b border-[#282828] bg-gradient-to-r from-[#1DB954]/20 via-[#181818] to-[#121212] px-6 py-4">
-          <div className="flex items-center gap-4 min-w-0">
+        <div className="flex items-center justify-between border-b border-border bg-canvas-elevated px-6 py-3.5">
+          <div className="flex items-center gap-3 min-w-0">
             <Link
               to="/chat"
-              className="flex h-9 w-9 items-center justify-center rounded-full bg-black/60 text-[#b3b3b3] hover:text-white transition-colors"
+              className="flex h-7 w-7 items-center justify-center rounded-[6px] border border-border bg-canvas-elevated text-body hover:bg-canvas hover:text-ink transition-colors"
             >
-              <ArrowLeft className="h-5 w-5" />
+              <ArrowLeft className="h-4 w-4" />
             </Link>
 
-            <div className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-[#1DB954] text-black shadow-lg">
-              <HeartPulse className="h-6 w-6 fill-black" />
+            <div className="flex h-8 w-8 flex-none items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs">
+              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
+                <path d="M12 2L2 22h20L12 2z" />
+              </svg>
             </div>
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">
-                <span className="text-[10px] font-bold uppercase tracking-wider text-[#1DB954]">
-                  AI Medical Consultation
+                <span className="font-mono text-[10px] font-medium uppercase tracking-wider text-[#0070f3]">
+                  AI CLINICAL STREAM
                 </span>
-                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#1DB954]" />
+                <span className="inline-block h-1.5 w-1.5 rounded-full bg-[#0070f3]" />
               </div>
-              <h1 className="truncate text-xl font-extrabold text-white">
+              <h1 className="truncate text-sm font-semibold text-ink">
                 {q.data?.thread.title ?? "New Consultation"}
               </h1>
             </div>
@@ -112,16 +114,16 @@ function ChatThreadPage() {
         </div>
 
         {/* Scrollable Messages Area */}
-        <div ref={scrollRef} className="flex-1 overflow-y-auto bg-gradient-to-b from-[#181818]/60 to-[#121212] p-6">
-          <div className="mx-auto flex max-w-3xl flex-col gap-6">
+        <div ref={scrollRef} className="flex-1 overflow-y-auto bg-canvas p-6">
+          <div className="mx-auto flex max-w-3xl flex-col gap-5">
             {messages.length === 0 && !pendingUser && (
-              <div className="rounded-2xl border border-dashed border-[#282828] bg-[#181818] p-8 text-center">
-                <div className="mx-auto flex h-12 w-12 items-center justify-center rounded-full bg-[#1DB954]/20 text-[#1DB954]">
-                  <Sparkles className="h-6 w-6" />
+              <div className="rounded-xl border border-dashed border-border bg-canvas-elevated p-8 text-center shadow-whisper">
+                <div className="mx-auto flex h-9 w-9 items-center justify-center rounded-[6px] border border-[#d3e5ff] bg-[#d3e5ff]/30 text-[#0070f3]">
+                  <Sparkles className="h-4 w-4" />
                 </div>
-                <h2 className="mt-4 text-2xl font-extrabold text-white">Start your consultation</h2>
-                <p className="mt-2 text-sm text-[#b3b3b3]">
-                  Describe any symptoms, medical questions, or lifestyle queries. Aidra is here to explain clearly.
+                <h2 className="mt-3 text-lg font-semibold text-ink">Start your consultation</h2>
+                <p className="mt-1 text-xs text-body">
+                  Describe any symptoms, medical questions, or health queries. Aidra is ready to explain clearly.
                 </p>
               </div>
             )}
@@ -138,11 +140,11 @@ function ChatThreadPage() {
                   initial={{ opacity: 0, y: 6 }}
                   animate={{ opacity: 1, y: 0 }}
                   exit={{ opacity: 0 }}
-                  className="max-w-[85%] self-start rounded-2xl bg-[#181818] border border-[#1DB954]/30 px-5 py-4 shadow-lg"
+                  className="max-w-[85%] self-start rounded-xl border border-border bg-canvas-elevated px-4 py-3 shadow-whisper"
                 >
-                  <div className="flex items-center gap-2 text-xs font-semibold text-[#1DB954]">
-                    <Activity className="h-4 w-4 animate-spin" />
-                    <span>Aidra is analyzing your prompt…</span>
+                  <div className="flex items-center gap-2 font-mono text-xs text-[#0070f3]">
+                    <Activity className="h-3.5 w-3.5 animate-spin" />
+                    <span>Aidra AI is processing prompt…</span>
                   </div>
                 </motion.div>
               )}
@@ -151,8 +153,8 @@ function ChatThreadPage() {
         </div>
 
         {/* Message Input Footer Bar */}
-        <form onSubmit={handleSubmit} className="border-t border-[#282828] bg-[#181818] p-4">
-          <div className="mx-auto flex max-w-3xl items-end gap-3">
+        <form onSubmit={handleSubmit} className="border-t border-border bg-canvas-elevated p-4">
+          <div className="mx-auto flex max-w-3xl items-end gap-2.5">
             <Textarea
               ref={inputRef}
               value={input}
@@ -165,19 +167,19 @@ function ChatThreadPage() {
               }}
               rows={1}
               placeholder="Ask Aidra about symptoms, lab tests, or health habits..."
-              className="min-h-12 flex-1 resize-none rounded-xl bg-[#242424] border-none px-4 py-3 text-sm text-white placeholder-[#a7a7a7] focus:ring-2 focus:ring-[#1DB954] outline-none"
+              className="min-h-10 flex-1 resize-none rounded-[6px] border border-border bg-canvas px-3.5 py-2.5 text-xs text-ink placeholder-mute focus:bg-canvas-elevated focus:border-ink outline-none transition-all"
               maxLength={4000}
               disabled={send.isPending}
             />
             <button
               type="submit"
               disabled={send.isPending || !input.trim()}
-              className="flex h-12 w-12 flex-none items-center justify-center rounded-xl bg-[#1DB954] text-black font-bold shadow-lg hover:scale-105 transition-all disabled:opacity-40"
+              className="flex h-10 w-10 flex-none items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs hover:opacity-90 transition-all disabled:opacity-40"
             >
-              {send.isPending ? <Loader2 className="h-5 w-5 animate-spin" /> : <Send className="h-5 w-5 fill-black" />}
+              {send.isPending ? <Loader2 className="h-4 w-4 animate-spin" /> : <Send className="h-4 w-4" />}
             </button>
           </div>
-          <div className="mx-auto mt-2 max-w-3xl text-center text-[10px] text-[#a7a7a7]">
+          <div className="mx-auto mt-2 max-w-3xl text-center font-mono text-[10px] text-mute">
             Aidra AI provides informational health guidance and does not replace emergency or clinical diagnoses.
           </div>
         </form>
@@ -190,28 +192,28 @@ function Bubble({ role, content }: { role: string; content: string }) {
   const isUser = role === "user";
   return (
     <motion.div
-      initial={{ opacity: 0, y: 8 }}
+      initial={{ opacity: 0, y: 6 }}
       animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.25 }}
+      transition={{ duration: 0.2 }}
       className={cn("max-w-[85%]", isUser ? "self-end" : "self-start")}
     >
       <div
         className={cn(
-          "rounded-2xl px-5 py-4 text-sm leading-relaxed shadow-lg",
+          "rounded-xl px-4 py-3.5 text-xs leading-relaxed shadow-whisper",
           isUser
-            ? "rounded-tr-none bg-[#282828] text-white"
-            : "rounded-tl-none bg-[#181818] border border-[#1DB954]/20 text-white",
+            ? "rounded-tr-[2px] bg-primary text-primary-foreground font-normal"
+            : "rounded-tl-[2px] border border-border bg-canvas-elevated text-ink",
         )}
       >
         {!isUser && (
-          <div className="mb-2 flex items-center gap-2 text-xs font-bold text-[#1DB954]">
-            <Sparkles className="h-4 w-4" /> Aidra Medical Response
+          <div className="mb-2 flex items-center gap-1.5 font-mono text-[10px] font-medium text-[#0070f3] uppercase tracking-wider">
+            <Sparkles className="h-3 w-3" /> AIDRA CLINICAL DIAGNOSTIC
           </div>
         )}
         {isUser ? (
-          <div className="whitespace-pre-wrap font-medium">{content}</div>
+          <div className="whitespace-pre-wrap">{content}</div>
         ) : (
-          <div className="prose prose-invert prose-sm max-w-none prose-p:my-2 prose-headings:font-bold prose-headings:text-[#1DB954] prose-strong:text-white prose-ul:my-2">
+          <div className="prose prose-sm max-w-none text-xs text-ink prose-p:my-1.5 prose-headings:font-semibold prose-headings:text-ink prose-strong:text-ink prose-code:font-mono prose-code:bg-canvas prose-code:px-1 prose-code:py-0.5 prose-code:rounded-[4px] prose-code:border prose-code:border-border">
             <ReactMarkdown>{content}</ReactMarkdown>
           </div>
         )}
