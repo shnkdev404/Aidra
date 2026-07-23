@@ -1,4 +1,5 @@
 import { Link } from "@tanstack/react-router";
+import { AidraLogo } from "@/components/ui/logo";
 
 export function SiteFooter() {
   return (
@@ -6,11 +7,7 @@ export function SiteFooter() {
       <div className="mx-auto grid max-w-7xl gap-10 px-6 py-16 md:grid-cols-4">
         <div>
           <div className="flex items-center gap-2">
-            <div className="flex h-6 w-6 items-center justify-center rounded-[6px] bg-primary text-primary-foreground">
-              <svg viewBox="0 0 24 24" className="h-3.5 w-3.5 fill-current">
-                <path d="M12 2L2 22h20L12 2z" />
-              </svg>
-            </div>
+            <AidraLogo size="sm" />
             <span className="text-base font-semibold text-ink">Aidra</span>
           </div>
           <p className="mt-4 max-w-xs text-xs text-mute leading-relaxed">

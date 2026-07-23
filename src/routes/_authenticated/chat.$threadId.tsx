@@ -10,6 +10,7 @@ import { toast } from "sonner";
 import { AppShell } from "@/components/app/AppShell";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea";
+import { AidraLogo } from "@/components/ui/logo";
 import { cn } from "@/lib/utils";
 import { getThread, sendMessage } from "@/lib/chat.functions";
 
@@ -93,11 +94,7 @@ function ChatThreadPage() {
               <ArrowLeft className="h-4 w-4" />
             </Link>
 
-            <div className="flex h-8 w-8 flex-none items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs">
-              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-                <path d="M12 2L2 22h20L12 2z" />
-              </svg>
-            </div>
+            <AidraLogo size="md" />
 
             <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2">

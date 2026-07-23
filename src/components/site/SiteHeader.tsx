@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { Sun, Moon } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { useTheme } from "@/hooks/use-theme";
+import { AidraLogo } from "@/components/ui/logo";
 import type { User } from "@supabase/supabase-js";
 
 export function SiteHeader({ variant = "patient" }: { variant?: "patient" | "doctor" }) {
@@ -22,11 +23,7 @@ export function SiteHeader({ variant = "patient" }: { variant?: "patient" | "doc
     <header className="sticky top-0 z-30 border-b border-border bg-canvas/90 backdrop-blur-md">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-6 py-3.5">
         <Link to="/" className="flex items-center gap-2.5 group">
-          <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs transition-all">
-            <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-              <path d="M12 2L2 22h20L12 2z" />
-            </svg>
-          </div>
+          <AidraLogo size="md" className="group-hover:scale-105" />
           <span className="text-lg font-semibold tracking-tight text-ink">Aidra</span>
           <span className="ml-1 hidden font-mono text-[11px] font-medium text-ink uppercase tracking-wider bg-hairline-soft px-2 py-0.5 rounded-[4px] border border-border sm:inline">
             HEALTH AI

@@ -7,6 +7,7 @@ import { Loader2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import { AidraLogo } from "@/components/ui/logo";
 
 const emailSchema = z
   .string()
@@ -103,11 +104,7 @@ export function AuthCard({ variant, initialMode = "signin", onSuccessRedirect }:
   return (
     <div className="w-full max-w-md rounded-xl border border-border bg-canvas-elevated p-8 shadow-floating">
       <div className="flex justify-center mb-4">
-        <div className="flex h-9 w-9 items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs">
-          <svg viewBox="0 0 24 24" className="h-5 w-5 fill-current">
-            <path d="M12 2L2 22h20L12 2z" />
-          </svg>
-        </div>
+        <AidraLogo size="lg" />
       </div>
 
       <div className="text-center">

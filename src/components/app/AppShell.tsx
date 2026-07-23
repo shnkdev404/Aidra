@@ -25,6 +25,7 @@ import { Button } from "@/components/ui/button";
 import { listThreads } from "@/lib/chat.functions";
 import { listHealthRecords } from "@/lib/health.functions";
 import { useTheme } from "@/hooks/use-theme";
+import { AidraLogo } from "@/components/ui/logo";
 
 interface NavItem {
   to: string;
@@ -88,11 +89,7 @@ export function AppShell({ children }: { children: ReactNode }) {
           {/* Top Panel: Brand & Main Navigation */}
           <div className="rounded-xl border border-border bg-canvas-elevated p-4 shadow-whisper">
             <Link to="/dashboard" className="mb-6 flex items-center gap-2.5 px-1">
-              <div className="flex h-8 w-8 items-center justify-center rounded-[6px] bg-primary text-primary-foreground shadow-xs">
-                <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-                  <path d="M12 2L2 22h20L12 2z" />
-                </svg>
-              </div>
+              <AidraLogo size="md" />
               <span className="text-lg font-semibold tracking-tight text-ink">Aidra</span>
               <span className="ml-auto rounded-[4px] border border-border bg-hairline-soft px-2 py-0.5 font-mono text-[10px] font-medium text-ink uppercase tracking-wider">
                 PRO

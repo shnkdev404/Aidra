@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#171717" />
+      <stop offset="100%" stop-color="#0a0a0a" />
+    </linearGradient>
+    <linearGradient id="cyanBlue" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00dfd8" />
+      <stop offset="50%" stop-color="#007cf0" />
+      <stop offset="100%" stop-color="#7928ca" />
+    </linearGradient>
+    <linearGradient id="sparkGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#50e3c2" />
+      <stop offset="100%" stop-color="#0070f3" />
+    </linearGradient>
+    <filter id="glow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="1" result="blur" />
+      <feComposite in="SourceGraphic" in2="blur" operator="over" />
+    </filter>
+  </defs>
+
+  <!-- Container Badge -->
+  <rect x="2" y="2" width="60" height="60" rx="16" fill="url(#bgGrad)" stroke="url(#cyanBlue)" stroke-width="2.5" />
+
+  <!-- Geometric "A" Frame -->
+  <path d="M 14 44 L 27 16 C 28.5 13.5 31.5 13.5 33 16 L 46 44" fill="none" stroke="url(#cyanBlue)" stroke-width="4.5" stroke-linecap="round" stroke-linejoin="round" />
+  
+  <!-- Glowing Clinical Heartbeat Pulse -->
+  <path d="M 10 32 L 21 32 L 24 23 L 28 41 L 32 19 L 36 35 L 39 32 L 50 32" fill="none" stroke="#ffffff" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" filter="url(#glow)" />
+
+  <!-- Glowing AI Spark -->
+  <circle cx="47" cy="15" r="4.5" fill="url(#sparkGrad)" />
+</svg>

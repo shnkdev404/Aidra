@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { z } from "zod";
 import { AuthCard } from "@/components/auth/AuthCard";
+import { AidraLogo } from "@/components/ui/logo";
 
 const searchSchema = z.object({
   mode: z.enum(["signin", "signup"]).optional(),
@@ -25,11 +26,7 @@ function AuthPage() {
       <div className="relative mx-auto grid min-h-screen max-w-6xl grid-cols-1 gap-8 px-6 py-10 md:grid-cols-2 md:items-center md:py-16">
         <div className="hidden md:block">
           <Link to="/" className="inline-flex items-center gap-2.5">
-            <div className="flex h-7 w-7 items-center justify-center rounded-[6px] bg-primary text-primary-foreground">
-              <svg viewBox="0 0 24 24" className="h-4 w-4 fill-current">
-                <path d="M12 2L2 22h20L12 2z" />
-              </svg>
-            </div>
+            <AidraLogo size="sm" />
             <span className="text-xl font-semibold tracking-tight text-ink">Aidra</span>
           </Link>
 
